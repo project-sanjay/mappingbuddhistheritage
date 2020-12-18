@@ -27,8 +27,8 @@ public class CountryController {
     private CountryService countryService;
     
     public String viewCountry(Model model) {
-        model.addAttribute("listCountry", countryService.getAllCountry());      
-        return "/";
+             
+        return "view_City";
     }  
 
     @GetMapping("/showNewCountryForm")

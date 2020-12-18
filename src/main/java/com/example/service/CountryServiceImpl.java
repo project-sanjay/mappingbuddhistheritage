@@ -10,13 +10,14 @@ import com.example.repository.CountryRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 /**
  *
  * @author Pali
  */
 @Service
-public class CountryServiceImpl implements CountryService{
-    
+public class CountryServiceImpl implements CountryService {
+
     @Autowired
     CountryRepository countryRepository;
 
@@ -25,8 +26,4 @@ public class CountryServiceImpl implements CountryService{
         this.countryRepository.save(country);
     }
 
-    @Override
-    public List<Country> getAllCountry() {
-        return countryRepository.findAll();
-    }
 }
