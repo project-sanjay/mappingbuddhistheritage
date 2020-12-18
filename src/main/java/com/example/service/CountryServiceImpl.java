@@ -25,5 +25,9 @@ public class CountryServiceImpl implements CountryService {
     public void saveCountry(Country country) {
         this.countryRepository.save(country);
     }
+     @Override
+    public List<Country> getAllCountry() {
+        return countryRepository.findAll();
+    }
 
 }

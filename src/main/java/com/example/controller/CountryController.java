@@ -27,7 +27,8 @@ public class CountryController {
     private CountryService countryService;
     
     @GetMapping()
-    public String viewCountry() {  
+    public String viewCountry(Model model) {  
+        model.addAttribute("listCountry", countryService.getAllCountry());
         return "view_Country";
     }  
 
