@@ -26,9 +26,9 @@ public class CountryController {
     @Autowired
     private CountryService countryService;
     
-    public String viewCountry(Model model) {
-             
-        return "view_City";
+    @GetMapping()
+    public String viewCountry() {  
+        return "view_Country";
     }  
 
     @GetMapping("/showNewCountryForm")
