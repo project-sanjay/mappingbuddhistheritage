@@ -17,7 +17,7 @@ and open the template in the editor.
         <header th:insert="fragments/adminlayout.html :: header"> </header>
         <div class="container">
             <h5>Add New Country</h5>
-            <form action="#" th:action="@{/saveCountry}" th:object="${country}" method="POST">
+            <form action="#" th:action="@{/view_Country/saveCountry}" th:object="${country}" method="POST">
                 <input type="text" th:field="*{countryname}" class="form-control mb-4 col-2" placeholder="Country Name">
                 <button type="submit" class="btn btn-info col-2"> Save Country</button>
             </form> 
