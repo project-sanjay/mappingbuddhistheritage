@@ -26,7 +26,7 @@ public class CountryController {
     @Autowired
     private CountryService countryService;
     
-    @GetMapping("/")
+    @GetMapping()
     public String viewCountry() {  
         return "view_Country";
     }  
