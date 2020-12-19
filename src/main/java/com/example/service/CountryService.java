@@ -19,4 +19,6 @@ public interface CountryService {
     List<Country> getAllCountry();
 
     void deleteCountryById(long id);
+    
+    Country getCountryById(long id);
 }

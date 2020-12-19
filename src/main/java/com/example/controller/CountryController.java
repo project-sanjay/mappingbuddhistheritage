@@ -46,6 +46,16 @@ public class CountryController {
         return "redirect:/dashboard/view_Country";
     }
 
+    @GetMapping("/dashboard/view_Country/update_Country/{id}")
+    public String showFormforUpdate(@PathVariable(value = "id") long id, Model model) {
+        // get employee from the service
+        Country employee = countryService.getCountryById(id);
+
+        //set employee as a model attribute to pre-populate the form
+        model.addAttribute("country", country);
+        return "update_Country";
+    }
+
     @GetMapping("/dashboard/view_Country/delete_Employee/{id}")
     public String deleteCountry(@PathVariable(value = "id") long id) {
         // call delete employee method
