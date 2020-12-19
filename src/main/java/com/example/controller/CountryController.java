@@ -31,17 +31,17 @@ public class CountryController {
         return "view_Country";
     }  
 
-    @GetMapping("/showNewCountryForm")
+    @GetMapping("/dashboard/view_Country/showNewCountryForm")
     public String showNewCountryForm(Model model) {
         // create model attribute to bind form data
         Country country = new Country();
         model.addAttribute("country", country);
         return "new_Country";
     }
-     @PostMapping("/saveCountry")
+     @PostMapping("/dashboard/view_Country/saveCountry")
     public String saveCountry(@ModelAttribute("country") Country country) {
         // save employee to database
         countryService.saveCountry(country);
-        return "redirect:/view_Country";
+        return "redirect:/dashboard/view_Country";
     }
 }
