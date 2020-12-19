@@ -20,13 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Pali
  */
 @Controller
-@RequestMapping("/dashboard")
 public class CountryController {
 
     @Autowired
     private CountryService countryService;
     
-    @GetMapping("/view_Country")
+    @GetMapping("/dashboard/view_Country")
     public String viewCountry(Model model) {  
         model.addAttribute("listCountry", countryService.getAllCountry());
         return "view_Country";
