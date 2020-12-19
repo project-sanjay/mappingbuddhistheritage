@@ -12,8 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  *
@@ -24,12 +24,12 @@ public class CountryController {
 
     @Autowired
     private CountryService countryService;
-    
+
     @GetMapping("/dashboard/view_Country")
-    public String viewCountry(Model model) {  
+    public String viewCountry(Model model) {
         model.addAttribute("listCountry", countryService.getAllCountry());
         return "view_Country";
-    }  
+    }
 
     @GetMapping("/dashboard/view_Country/showNewCountryForm")
     public String showNewCountryForm(Model model) {
@@ -38,10 +38,18 @@ public class CountryController {
         model.addAttribute("country", country);
         return "new_Country";
     }
-     @PostMapping("/dashboard/view_Country/saveCountry")
+
+    @PostMapping("/dashboard/view_Country/saveCountry")
     public String saveCountry(@ModelAttribute("country") Country country) {
         // save employee to database
         countryService.saveCountry(country);
+        return "redirect:/dashboard/view_Country";
+    }
+
+    @GetMapping("/dashboard/view_Country/delete_Employee/{id}")
+    public String deleteCountry(@PathVariable(value = "id") long id) {
+        // call delete employee method
+        this.countryService.deleteCountryById(id);
         return "redirect:/dashboard/view_Country";
     }
 }

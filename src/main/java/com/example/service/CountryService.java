@@ -15,5 +15,8 @@ import java.util.List;
 public interface CountryService {
 
     public void saveCountry(Country country);
-     List<Country> getAllCountry();
+
+    List<Country> getAllCountry();
+
+    void deleteCountryById(long id);
 }
