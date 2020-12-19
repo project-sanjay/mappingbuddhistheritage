@@ -49,7 +49,7 @@ public class CountryController {
     @GetMapping("/dashboard/view_Country/update_Country/{id}")
     public String showFormforUpdate(@PathVariable(value = "id") long id, Model model) {
         // get employee from the service
-        Country employee = countryService.getCountryById(id);
+        Country country = countryService.getCountryById(id);
 
         //set employee as a model attribute to pre-populate the form
         model.addAttribute("country", country);
