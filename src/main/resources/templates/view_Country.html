@@ -23,13 +23,17 @@ and open the template in the editor.
                     <tr> 
                         <th>Country Id</th>
                         <th>Country Name</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="country:${listCountry}">
                         <td th:text="${country.id_country}"></td>
                         <td th:text="${country.countryname}"></td>
-                        
+                        <td>
+                            <a th:href="" class="btn btn-primary">Update</a>
+                            <a th:href="" class="btn btn-danger">Delete</a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
