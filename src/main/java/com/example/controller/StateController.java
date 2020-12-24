@@ -7,17 +7,15 @@ package com.example.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  *
  * @author Pali
  */
 @Controller
-@RequestMapping("/view_State")
 public class StateController {
 
-    @GetMapping()
+    @GetMapping("/dashboard/view_State")
     public String viewState() {
         return "view_State";
     }
