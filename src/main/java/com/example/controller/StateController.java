@@ -5,8 +5,16 @@
  */
 package com.example.controller;
 
+
+import com.example.repository.StateRepository;
+import com.example.model.State;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  *
@@ -15,8 +23,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class StateController {
 
+    @Autowired
+    private StateRepository stateRepository;
+
     @GetMapping("/dashboard/view_State")
     public String viewState() {
         return "view_State";
+    }
+
+    @GetMapping("/dashboard/view_State/showNewStateForm")
+    public String showNewStateForm(Model model) {
+        // create model attribute to bind form data
+        State state = new State();
+        model.addAttribute("state", state);
+        return "new_State";
+    }
+
+    @PostMapping("/dashboard/view_State/saveState")
+    public String saveCountry(@ModelAttribute("state") State state) {
+        // save employee to database
+
+        return "redirect:/dashboard/view_State";
     }
 }
