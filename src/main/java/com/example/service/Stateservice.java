@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package com.example.service;
-import com.example.model.State
+import com.example.model.State;
 /**
  *
  * @author Pali
