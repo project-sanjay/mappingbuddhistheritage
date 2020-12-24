@@ -26,6 +26,17 @@ and open the template in the editor.
                         <input type="text" th:field="*{statename}" class="form-control mb-4 col-2" placeholder="State Name" required>
                     </div>
                 </div>
+
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-4">Country Name: </label>
+                    <div class="col-sm-8">
+                        <select th:field="*{country}" class="form-control" required>
+                            <th:block th:each="country:${listCountry}">
+                                <option th:text="${country.countryname}" th:value="${country.id_country}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                </div>
                 <div class="text-center p-3">
                     <button type="submit" class="btn btn-info col-2"> Save State</button>
                 </div>
