@@ -26,8 +26,8 @@ public class StateController {
     @Autowired
     private StateRepository stateRepository;
 
-    /*@Autowired
-    private CountryService countryService;*/
+    @Autowired
+    private CountryService countryService;
 
     @GetMapping("/dashboard/view_State")
     public String viewState() {
@@ -39,7 +39,7 @@ public class StateController {
         // create model attribute to bind form data
         State state = new State();
         model.addAttribute("state", state);
-      //  model.addAttribute("listCountry", countryService.getAllCountry());
+        model.addAttribute("listCountry", countryService.getAllCountry());
         return "new_State";
     }
 
