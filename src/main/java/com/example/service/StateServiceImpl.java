@@ -5,12 +5,12 @@
  */
 package com.example.service;
 
+import com.example.model.State;
 import com.example.repository.StateRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-
 
 /**
  *
@@ -23,7 +23,10 @@ public class StateServiceImpl implements Stateservice {
     StateRepository stateRepository;
 
     @Override
-    public void saveCountry(State state) {
-        this.stateRepository.save(state);
+    public void saveState(State State) {
+       this.stateRepository.save(State);
+               
     }
+    
+    
 }
