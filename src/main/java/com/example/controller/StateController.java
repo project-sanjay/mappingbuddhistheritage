@@ -5,9 +5,10 @@
  */
 package com.example.controller;
 
-import com.example.repository.StateRepository;
+
 import com.example.model.State;
 import com.example.service.CountryService;
+import com.example.service.Stateservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class StateController {
 
     @Autowired
-    private StateRepository stateRepository;
+    private Stateservice stateservice;
 
     @Autowired
     private CountryService countryService;
@@ -46,7 +47,7 @@ public class StateController {
     @PostMapping("/dashboard/view_State/saveState")
     public String saveCountry(@ModelAttribute("state") State state) {
         // save employee to database
-
+        stateservice.saveState(state);
         return "redirect:/dashboard/view_State";
     }
 }
