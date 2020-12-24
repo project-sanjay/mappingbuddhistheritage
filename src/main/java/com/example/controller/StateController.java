@@ -5,9 +5,9 @@
  */
 package com.example.controller;
 
-
 import com.example.repository.StateRepository;
 import com.example.model.State;
+import com.example.service.CountryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +26,9 @@ public class StateController {
     @Autowired
     private StateRepository stateRepository;
 
+    @Autowired
+    private CountryService countryService;
+
     @GetMapping("/dashboard/view_State")
     public String viewState() {
         return "view_State";
@@ -36,6 +39,7 @@ public class StateController {
         // create model attribute to bind form data
         State state = new State();
         model.addAttribute("state", state);
+        model.addAttribute("listCountry", countryService.getAllCountry());
         return "new_State";
     }
 
