@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+// this is new import here
+import com.example.repository.CountryRepository;
+import java.util.List;
+
 /**
  *
  * @author Pali
@@ -25,9 +29,15 @@ public class CountryController {
     @Autowired
     private CountryService countryService;
 
+//    this is new thing 
+    @Autowired
+    private CountryRepository countryRepository;
+
     @GetMapping("/dashboard/view_Country")
     public String viewCountry(Model model) {
-        model.addAttribute("listCountry", countryService.getAllCountry());
+//        model.addAttribute("listCountry", countryService.getAllCountry());
+        List<Country> listCountry = countryRepository.findAll();
+        model.addAttribute("listCountry", listCountry);
         return "view_Country";
     }
 
