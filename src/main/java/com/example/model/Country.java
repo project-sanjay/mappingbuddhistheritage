@@ -21,6 +21,20 @@ import javax.persistence.Table;
 public class Country {
 
     /**
+     * @return the countrynamenik
+     */
+    public String getCountrynamenik() {
+        return countrynamenik;
+    }
+
+    /**
+     * @param countrynamenik the countrynamenik to set
+     */
+    public void setCountrynamenik(String countrynamenik) {
+        this.countrynamenik = countrynamenik;
+    }
+
+    /**
      * @return the id_country
      */
     public long getId_country() {
@@ -48,10 +62,15 @@ public class Country {
         this.countryname = countryname;
     }
 
+   
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_country;
     
     @Column(nullable = false,unique = true)
     private String countryname;
+    
+    @Column(nullable = false,unique = true)
+    private String countrynamenik;
+    
 }
