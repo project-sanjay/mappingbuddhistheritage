@@ -29,7 +29,7 @@ public class StateServiceImpl implements Stateservice {
 
     @Override
     public List<State> getAllState() {
-        this.stateRepository.findAll();
+        return stateRepository.findAll();
     }
 
 }

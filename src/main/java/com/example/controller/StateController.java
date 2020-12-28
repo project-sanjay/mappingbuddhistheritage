@@ -33,7 +33,6 @@ public class StateController {
     @GetMapping("/dashboard/view_State")
     public String viewState(Model model) {
         model.addAttribute("listState", stateservice.getAllState());
-        
         return "view_State";
     }
 
