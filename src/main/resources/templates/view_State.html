@@ -31,7 +31,7 @@ and open the template in the editor.
                     <tr th:each="state:${listState}">
                         <td th:text="${state.id_state}"></td>
                         <td th:text="${state.statename}"></td>
-                        <td th:text="${state.country.countryname}"></td>
+                        
                         <td>
                             <a th:href="@{/dashboard/view_Country/update_Country/{id}(id=${country.id_country})}" class="btn btn-primary">Update</a>
                             <a th:href="@{/dashboard/view_Country/delete_Employee/{id}(id=${country.id_country})}" class="btn btn-danger">Delete</a>
