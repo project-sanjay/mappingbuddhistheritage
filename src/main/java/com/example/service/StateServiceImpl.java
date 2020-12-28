@@ -24,9 +24,12 @@ public class StateServiceImpl implements Stateservice {
 
     @Override
     public void saveState(State State) {
-       this.stateRepository.save(State);
-               
+        this.stateRepository.save(State);
     }
-    
-    
+
+    @Override
+    public List<State> getAllState() {
+        this.stateRepository.findAll();
+    }
+
 }

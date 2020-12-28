@@ -31,7 +31,9 @@ public class StateController {
     private CountryService countryService;
 
     @GetMapping("/dashboard/view_State")
-    public String viewState() {
+    public String viewState(Model model) {
+        model.addAttribute("listState", stateservice.getAllState());
+        
         return "view_State";
     }
 

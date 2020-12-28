@@ -5,6 +5,7 @@
  */
 package com.example.service;
 import com.example.model.State;
+import java.util.List;
 /**
  *
  * @author Pali
@@ -12,4 +13,5 @@ import com.example.model.State;
 public interface Stateservice {
 
     public void saveState(State State);
+    List<State> getAllState();
 }
