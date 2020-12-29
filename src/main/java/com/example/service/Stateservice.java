@@ -14,4 +14,5 @@ public interface Stateservice {
 
     public void saveState(State State);
     List<State> getAllState();
+    void deleteStateById(long id);
 }

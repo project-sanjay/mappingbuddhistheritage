@@ -5,7 +5,6 @@
  */
 package com.example.controller;
 
-
 import com.example.model.State;
 import com.example.service.CountryService;
 import com.example.service.Stateservice;
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 /**
@@ -46,9 +46,17 @@ public class StateController {
     }
 
     @PostMapping("/dashboard/view_State/saveState")
-    public String saveCountry(@ModelAttribute("state") State state) {
+    public String saveState(@ModelAttribute("state") State state) {
         // save employee to database
         stateservice.saveState(state);
         return "redirect:/dashboard/view_State";
     }
+
+    @GetMapping("/dashboard/view_State/delete_State/{id}")
+    public String deleteState(@PathVariable(value = "id") long id) {
+        // call delete employee method
+        this.stateservice.deleteStateById(id);
+        return "redirect:/dashboard/view_State";
+    }
+
 }

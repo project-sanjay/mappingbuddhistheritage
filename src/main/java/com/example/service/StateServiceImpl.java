@@ -32,4 +32,9 @@ public class StateServiceImpl implements Stateservice {
         return stateRepository.findAll();
     }
 
+    @Override
+    public void deleteStateById(long id) {
+        this.stateRepository.deleteById(id);
+    }
+
 }

@@ -56,7 +56,7 @@ public class CountryController {
         return "update_Country";
     }
 
-    @GetMapping("/dashboard/view_Country/delete_Employee/{id}")
+    @GetMapping("/dashboard/view_Country/delete_Country/{id}")
     public String deleteCountry(@PathVariable(value = "id") long id) {
         // call delete employee method
         this.countryService.deleteCountryById(id);
