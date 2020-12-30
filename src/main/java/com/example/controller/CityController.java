@@ -51,7 +51,7 @@ public class CityController {
         return "redirect:/dashboard/view_City";
     }
 
-    @GetMapping("/dashboard/view_State/update_State/{id}")
+    @GetMapping("/dashboard/view_City/update_City/{id}")
     public String showFormforUpdate(@PathVariable(value = "id") long id, Model model) {
         // get employee from the service
         City city = Service_City.getCityById(id);
