@@ -56,8 +56,6 @@ public class StateController {
     public String showFormforUpdate(@PathVariable(value = "id") long id, Model model) {
         // get employee from the service
         State state = stateservice.getStateById(id);
-
-        //set employee as a model attribute to pre-populate the form
         model.addAttribute("state", state);
         model.addAttribute("listCountry", countryService.getAllCountry());
         return "update_State";

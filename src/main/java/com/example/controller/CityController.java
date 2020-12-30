@@ -51,6 +51,15 @@ public class CityController {
         return "redirect:/dashboard/view_City";
     }
 
+    @GetMapping("/dashboard/view_State/update_State/{id}")
+    public String showFormforUpdate(@PathVariable(value = "id") long id, Model model) {
+        // get employee from the service
+        City city = Service_City.getCityById(id);
+        model.addAttribute("city", city);
+        model.addAttribute("listState", stateservice.getAllState());
+        return "update_State";
+    }
+
     @GetMapping("/dashboard/view_City/delete_City/{id}")
     public String deleteState(@PathVariable(value = "id") long id) {
         // call delete employee method

@@ -21,7 +21,7 @@ public class CityServiceImpl implements Service_City {
 
     @Autowired
     CityRepository cityRepository;
-    
+
     @Override
     public void saveCity(City City) {
         this.cityRepository.save(City);
@@ -36,5 +36,16 @@ public class CityServiceImpl implements Service_City {
     public void deleteCityById(long id) {
         this.cityRepository.deleteById(id);
     }
-   
+
+    @Override
+    public City getCityById(long id) {
+        Optional<City> optional = cityRepository.findById(id);
+        City city = null;
+        if (optional.isPresent()) {
+            city = optional.get();
+        } else {
+            throw new RuntimeException("Country not found for id::" + id);
+        }
+        return city;
+    }
 }
