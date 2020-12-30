@@ -37,4 +37,16 @@ public class StateServiceImpl implements Stateservice {
         this.stateRepository.deleteById(id);
     }
 
+    @Override
+    public State getStateById(long id) {
+        Optional<State> optional = stateRepository.findById(id);
+        State state = null;
+        if (optional.isPresent()) {
+            state = optional.get();
+        } else {
+            throw new RuntimeException("Country not found for id::" + id);
+        }
+        return state;
+    }
+
 }
