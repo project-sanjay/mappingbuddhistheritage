@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Pali
  */
 @Service
-public class CityServiceImpl implements CityService {
+public class CityServiceImpl implements Service_City {
 
     @Autowired
     CityRepository cityRepository;

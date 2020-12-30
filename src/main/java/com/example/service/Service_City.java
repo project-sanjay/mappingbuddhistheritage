@@ -4,15 +4,17 @@
  * and open the template in the editor.
  */
 package com.example.service;
+
 import com.example.model.City;
 import java.util.List;
+
 /**
  *
  * @author Pali
  */
-public interface CityService {
+public interface Service_City {
 
     public void saveCity(City City);
+
     List<City> getAllCity();
-   
 }
