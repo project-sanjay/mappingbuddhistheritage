@@ -5,6 +5,8 @@
  */
 package com.example.controller;
 
+import com.example.model.City;
+import com.example.service.Stateservice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class CityController {
 
+    @Autowired
+    private Stateservice stateservice;
+
     @GetMapping("/dashboard/view_City")
     public String viewCity() {
         return "view_City";
@@ -28,6 +33,9 @@ public class CityController {
     @GetMapping("/dashboard/view_City/showNewCityForm")
     public String showNewStateForm(Model model) {
         // create model attribute to bind form data
+        City city = new City();
+        model.addAttribute("city", city);
+        model.addAttribute("listState", stateservice.getAllState());
         return "new_City";
     }
 }
