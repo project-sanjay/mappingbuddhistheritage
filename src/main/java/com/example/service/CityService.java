@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface CityService {
 
-    public void saveCity(City city);
+    public void saveCity(City City);
     List<City> getAllCity();
-    
+   
 }
