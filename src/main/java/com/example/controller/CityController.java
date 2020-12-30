@@ -30,7 +30,8 @@ public class CityController {
     private Stateservice stateservice;
 
     @GetMapping("/dashboard/view_City")
-    public String viewCity() {
+    public String viewCity(Model model) {
+        model.addAttribute("listCity", cityservice.getAllCity());
         return "view_City";
     }
 
