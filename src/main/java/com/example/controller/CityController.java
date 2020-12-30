@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import com.example.service.CityService;
 
 /**
  *
@@ -21,6 +22,9 @@ import org.springframework.web.bind.annotation.PostMapping;
  */
 @Controller
 public class CityController {
+
+    @Autowired
+    private CityService cityservice;
 
     @Autowired
     private Stateservice stateservice;
@@ -37,5 +41,12 @@ public class CityController {
         model.addAttribute("city", city);
         model.addAttribute("listState", stateservice.getAllState());
         return "new_City";
+    }
+
+    @PostMapping("/dashboard/view_City/saveCity")
+    public String saveState(@ModelAttribute("city") City city) {
+        // save employee to database
+        cityservice.saveCity(city);
+        return "redirect:/dashboard/view_City";
     }
 }
