@@ -34,7 +34,7 @@ and open the template in the editor.
                         <td th:text="${city.state.statename}"></td>
                         <td>
                             <a  class="btn btn-primary">Update</a>
-                            <a  class="btn btn-danger">Delete</a>
+                            <a th:href="@{/dashboard/view_City/delete_City/{id}(id=${city.id_city})}" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>
                 </tbody>

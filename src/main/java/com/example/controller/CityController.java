@@ -24,7 +24,7 @@ import com.example.service.Service_City;
 public class CityController {
 
     @Autowired
-    private Service_City Service_City;  
+    private Service_City Service_City;
 
     @Autowired
     private Stateservice stateservice;
@@ -48,6 +48,13 @@ public class CityController {
     public String saveState(@ModelAttribute("city") City city) {
         // save employee to database
         Service_City.saveCity(city);
+        return "redirect:/dashboard/view_City";
+    }
+
+    @GetMapping("/dashboard/view_City/delete_City/{id}")
+    public String deleteState(@PathVariable(value = "id") long id) {
+        // call delete employee method
+        this.Service_City.deleteCityById(id);
         return "redirect:/dashboard/view_City";
     }
 }

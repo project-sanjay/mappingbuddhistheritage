@@ -31,5 +31,10 @@ public class CityServiceImpl implements Service_City {
     public List<City> getAllCity() {
         return cityRepository.findAll();
     }
+
+    @Override
+    public void deleteCityById(long id) {
+        this.cityRepository.deleteById(id);
+    }
    
 }

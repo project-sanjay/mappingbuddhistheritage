@@ -17,4 +17,6 @@ public interface Service_City {
     public void saveCity(City City);
 
     List<City> getAllCity();
+
+    void deleteCityById(long id);
 }
