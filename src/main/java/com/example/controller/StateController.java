@@ -52,6 +52,17 @@ public class StateController {
         return "redirect:/dashboard/view_State";
     }
 
+     @GetMapping("/dashboard/view_State/update_State/{id}")
+    public String showFormforUpdate(@PathVariable(value = "id") long id, Model model) {
+        // get employee from the service
+        State state = stateservice.getStateById(id);
+
+        //set employee as a model attribute to pre-populate the form
+        model.addAttribute("state", state);
+        model.addAttribute("listCountry", countryService.getAllCountry());
+        return "update_State";
+    }
+    
     @GetMapping("/dashboard/view_State/delete_State/{id}")
     public String deleteState(@PathVariable(value = "id") long id) {
         // call delete employee method
