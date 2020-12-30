@@ -57,7 +57,7 @@ public class CityController {
         City city = Service_City.getCityById(id);
         model.addAttribute("city", city);
         model.addAttribute("listState", stateservice.getAllState());
-        return "update_State";
+        return "update_City";
     }
 
     @GetMapping("/dashboard/view_City/delete_City/{id}")
