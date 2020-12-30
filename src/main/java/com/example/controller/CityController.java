@@ -24,7 +24,7 @@ import com.example.service.CityService;
 public class CityController {
 
     @Autowired
-    private CityService cityservice;
+    private CityService cityservice;  
 
     @Autowired
     private Stateservice stateservice;
