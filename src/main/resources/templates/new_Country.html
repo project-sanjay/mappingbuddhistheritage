@@ -18,8 +18,15 @@ and open the template in the editor.
         <div class="container">
             <h5>Add New Country</h5>
             <form action="#" th:action="@{/dashboard/view_Country/saveCountry}" th:object="${country}" method="POST">
-                <input type="text" th:field="*{countryname}" class="form-control mb-4 col-2" placeholder="Country Name" required>
-                <button type="submit" class="btn btn-info col-2"> Save Country</button>
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-4">Country Name: </label>
+                    <div class="col-sm-8">
+                        <input type="text" th:field="*{countryname}" class="form-control mb-4 col-2" placeholder="Country Name" required>
+                    </div>
+                </div>
+                <div class="text-center p-3">
+                    <button type="submit" class="btn btn-info col-2"> Save Country</button>
+                </div>
             </form> 
             <hr>
             <a th:href = "@{/dashboard/view_Country}"> Back to Country list</a>
