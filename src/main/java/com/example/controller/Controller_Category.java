@@ -6,19 +6,19 @@
 package com.example.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  *
  * @author Pali
  */
 @Controller
-@RequestMapping("/view_Category")
-public class CategoryController {
+public class Controller_Category {
 
-    @GetMapping()
-    public String viewCategory() {
+    @GetMapping("/dashboard/view_Category")
+    public String viewCategory(Model model) {
+      
         return "view_Category";
     }
 }
