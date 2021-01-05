@@ -5,6 +5,7 @@
  */
 package com.example.controller;
 
+import com.example.model.Category;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,15 @@ public class Controller_Category {
 
     @GetMapping("/dashboard/view_Category")
     public String viewCategory(Model model) {
-      
+
         return "view_Category";
+    }
+
+    @GetMapping("/dashboard/view_Category/showNewCategoryForm")
+    public String showNewCountryForm(Model model) {
+        // create model attribute to bind form data
+        Category Category = new Category();
+        model.addAttribute("category", Category);
+        return "new_Category";
     }
 }
