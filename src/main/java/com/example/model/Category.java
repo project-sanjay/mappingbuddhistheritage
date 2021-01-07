@@ -29,9 +29,6 @@ public class Category {
     private String categoryname;
 
     @Column(nullable = false, unique = true)
-    private String categorytype;
-
-    @Column(nullable = false, unique = true)
     private byte[] categorypic;
 
     /**
@@ -62,19 +59,6 @@ public class Category {
         this.categoryname = categoryname;
     }
 
-    /**
-     * @return the categorytype
-     */
-    public String getCategorytype() {
-        return categorytype;
-    }
-
-    /**
-     * @param categorytype the categorytype to set
-     */
-    public void setCategorytype(String categorytype) {
-        this.categorytype = categorytype;
-    }
 
     /**
      * @return the categorypic
