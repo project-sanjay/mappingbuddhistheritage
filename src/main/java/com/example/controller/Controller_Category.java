@@ -6,6 +6,7 @@
 package com.example.controller;
 
 import com.example.model.Category;
+import com.example.servie.Service_Category;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class Controller_Category {
 
+    @Autowired
+    private Service_Category Service_Category;
+    
     @GetMapping("/dashboard/view_Category")
     public String viewCategory(Model model) {
 
@@ -24,10 +28,17 @@ public class Controller_Category {
     }
 
     @GetMapping("/dashboard/view_Category/showNewCategoryForm")
-    public String showNewCountryForm(Model model) {
+    public String showNewCategoryForm(Model model) {
         // create model attribute to bind form data
         Category Category = new Category();
         model.addAttribute("category", Category);
         return "new_Category";
+    }
+
+    @PostMapping("/dashboard/view_Category/saveCategory")
+    public String saveCategory(@ModelAttribute("category") Category category) {
+        // save employee to database
+        Service_Category.saveCategory(category);
+        return "redirect:/dashboard/view_Category";
     }
 }
