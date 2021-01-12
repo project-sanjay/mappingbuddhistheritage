@@ -25,8 +25,6 @@ import org.springframework.util.StringUtils;
 @Controller
 public class Controller_Category {
 
-    
-
     @Autowired
     private Service_Category Service_Category;
 
@@ -45,11 +43,12 @@ public class Controller_Category {
     }
 
     @PostMapping("/dashboard/view_Category/saveCategory")
-    public String saveCategory(@ModelAttribute("category") Category category,@RequestParam("categorypic") MultipartFile MultipartFile) throws IOException {
+    public String saveCategory(@ModelAttribute("category") Category category, @RequestParam("categorypic") MultipartFile MultipartFile) throws IOException {
         // save category to database
-        String fileName=StringUtils.cleanPath(MultipartFile.getOriginalFilename());
-        category.setCategorypic(MultipartFile.getBytes());
         Service_Category.saveCategory(category);
+        Category Category = new Category();
+        Category.setCategorypic(MultipartFile.getBytes());
+        Service_Category.saveCategory(Category);
         return "redirect:/dashboard/view_Category";
     }
 }
