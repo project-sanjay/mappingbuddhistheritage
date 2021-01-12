@@ -6,10 +6,17 @@
 package com.example.controller;
 
 import com.example.model.Category;
+import com.example.service.Service_Category;
 import com.example.servie.Service_Category;
+import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  *
@@ -18,9 +25,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class Controller_Category {
 
+    @Value("${uploadDir}")
+    private String uploadFolder;
+
+    private final Logger log = (Logger) LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private Service_Category Service_Category;
-    
+
     @GetMapping("/dashboard/view_Category")
     public String viewCategory(Model model) {
 

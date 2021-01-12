@@ -6,11 +6,19 @@
 package com.example.service;
 
 import com.example.model.Category;
+import java.util.List;
 
 /**
  *
  * @author Pali
  */
 public interface Service_Category {
-     public void saveCategory(Category category);
+
+    public void saveCategory(Category category);
+
+    List<Category> getAllCategory();
+
+    void deleteCategoryById(long id);
+
+    public Category getCategoryById(long id);
 }
