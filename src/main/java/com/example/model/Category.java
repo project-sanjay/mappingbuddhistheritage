@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.Table;
 
 /**
@@ -25,11 +24,11 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_category;
 
-    @Column(nullable = false, unique = false)
+    @Column(nullable = false, unique = true)
     private String categoryname;
 
-    @Column(nullable = false, unique = true)
-    private byte[] categorypic;
+    @Column(nullable = false, unique = false)
+    private String categoryimage;
 
     /**
      * @return the id_category
@@ -59,19 +58,18 @@ public class Category {
         this.categoryname = categoryname;
     }
 
-
     /**
-     * @return the categorypic
+     * @return the categoryimage
      */
-    public byte[] getCategorypic() {
-        return categorypic;
+    public String getCategoryimage() {
+        return categoryimage;
     }
 
     /**
-     * @param categorypic the categorypic to set
+     * @param categoryimage the categoryimage to set
      */
-    public void setCategorypic(byte[] categorypic) {
-        this.categorypic = categorypic;
+    public void setCategoryimage(String categoryimage) {
+        this.categoryimage = categoryimage;
     }
 
 }

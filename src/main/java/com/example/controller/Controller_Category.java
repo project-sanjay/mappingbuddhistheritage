@@ -46,8 +46,7 @@ public class Controller_Category {
         // save category to database
         Service_Category.saveCategory(category);
         Category Category = new Category();
-        byte[] categorypic=MultipartFile.getBytes();
-        Category.setCategorypic(categorypic);
+        byte[] categorypic = MultipartFile.getBytes();
         Service_Category.saveCategory(Category);
         return "redirect:/dashboard/view_Category";
     }
