@@ -50,7 +50,7 @@ public class Controller_Category {
     @PostMapping("/dashboard/view_Category/saveCategory")
     public String saveCategory(@ModelAttribute("category") Category category, @RequestParam("categoryimage") MultipartFile MultipartFile) throws IOException {
         // save category to database
-        String fileName = StringUtils.cleanPath(MultipartFile.getOriginalFilename());
+        String fileName = StringUtils.cleanPath(MultipartFile.getOriginalFilename().toString());
         category.setCategoryimage(fileName);
         Category saveCategory = Service_Category.saveCategory(category);
 
