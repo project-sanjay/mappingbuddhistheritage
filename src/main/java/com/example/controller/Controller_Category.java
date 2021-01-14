@@ -8,9 +8,15 @@ package com.example.controller;
 import com.example.model.Category;
 import com.example.service.Service_Category;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,13 +48,22 @@ public class Controller_Category {
     }
 
     @PostMapping("/dashboard/view_Category/saveCategory")
-    public String saveCategory(@ModelAttribute("category") Category category, @RequestParam("categorypic") MultipartFile MultipartFile) throws IOException {
+    public String saveCategory(@ModelAttribute("category") Category category, @RequestParam("categoryimage") MultipartFile MultipartFile) throws IOException {
         // save category to database
-        Service_Category.saveCategory(category);
-        Category Category = new Category();
-        byte[] categorypic = MultipartFile.getBytes();
-        Service_Category.saveCategory(Category);
+        String fileName = StringUtils.cleanPath(MultipartFile.getOriginalFilename());
+        category.setCategoryimage(fileName);
+        Category saveCategory = Service_Category.saveCategory(category);
+
+        String uploadDir = "../categoryimg/" + saveCategory.getId_category();
+
+        Path uploadPath = Paths.get(uploadDir);
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        InputStream inputStream = MultipartFile.getInputStream();
+        Path filePath = uploadPath.resolve(fileName);
+        Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
         return "redirect:/dashboard/view_Category";
     }
-}  
-  
+}

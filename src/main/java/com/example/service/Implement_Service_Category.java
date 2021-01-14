@@ -22,8 +22,9 @@ public class Implement_Service_Category implements Service_Category {
     Repository_Category Repository_Category;
 
     @Override
-    public void saveCategory(Category Category) {
-        this.Repository_Category.save(Category);
+    public Category saveCategory(Category Category) {
+        Category=Repository_Category.save(Category);
+        return Category;
     }
 
     @Override

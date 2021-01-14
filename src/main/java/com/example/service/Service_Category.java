@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface Service_Category {
 
-    public void saveCategory(Category category);
+    public Category saveCategory(Category category);
 
     List<Category> getAllCategory();
 
