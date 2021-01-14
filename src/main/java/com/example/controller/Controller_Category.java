@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.util.StringUtils;
 
 /**
  *
@@ -47,7 +46,8 @@ public class Controller_Category {
         // save category to database
         Service_Category.saveCategory(category);
         Category Category = new Category();
-        Category.setCategorypic(MultipartFile.getBytes());
+        byte[] categorypic=MultipartFile.getBytes();
+        Category.setCategorypic(categorypic);
         Service_Category.saveCategory(Category);
         return "redirect:/dashboard/view_Category";
     }
