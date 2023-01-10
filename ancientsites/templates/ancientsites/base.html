@@ -1,0 +1,111 @@
+<!DOCTYPE html> {% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapping Buddhist Heritage</title>
+    <link rel="icon" type="image/png" href="{%static 'images/MBH_Logo_100px.png'%}"/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+    <script src="{% static 'js/jquery.js' %} "></script>
+    <script src="{% static 'js/popper.js' %} "></script>
+    <script src="{% static 'js/bootstrap.js' %} "></script>
+    <script src="{% static 'js/myscript.js' %} "></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+
+</head>
+
+<body onload="hideselect()">
+
+    <nav class="navbar navbar-expand-md navbar-dark navbar-custom">
+        <div class="container-fluid">
+            <a class="navbar-brand fs-3" href="#" style="font-family: 'Oswald', sans-serif;">
+               Mapping Buddhist Heritage</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            <div class="collapse navbar-collapse m-lg-auto" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page " href="{% url 'index' %} " style="font-family: 'Lato', sans-serif;font-family: 'Roboto', sans-serif;">HOME</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " aria-current="page " href="{% url 'archeological_site_search' %} " style="font-family: 'Lato', sans-serif;font-family: 'Roboto', sans-serif;">ARCHEOLOGICAL SITES</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " aria-current="page " href="{% url 'aboutus' %} " style="font-family: 'Lato', sans-serif;font-family: 'Roboto', sans-serif;">ABOUT US</a>
+                    </li>
+               
+                
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid ">
+        <div class="row mt-2 ">
+            <div class="col-md-12 ">
+                {% block content %} {% endblock content %}
+            </div>
+        </div>
+
+    </div>
+    <hr>
+    <div class="container-md ">
+        <div class="row mt-2 ">
+            <div class="col-md-2">
+
+            </div>
+            <div class="col-md-8">
+
+                <div class="row mt-2">
+                    <div class="col-md-12 text-md-center">
+                        <img src="{%static 'images/MBH_Logo_100px.png'%}" alt=""><br>
+                        <h2 class="texthighlighter">Mapping Buddhist Heritage</h2>
+
+                    </div>
+                    <div class="col-md-12 text-md-center copyright">
+                        
+                        Copyright @2020 All rights reserved
+                    </div>
+                    <div class="col-md-12 text-md-center">
+                        <p class="footername">
+                            Dr. Yojana Bhagat & Mr. Sanjay Jambhulkar <br> www.mappingbuddhistheritage.com | mappingbuddhistheritage@gmail.com
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-2 ">
+                <ul class="navbar-nav text-md-end" style=" margin-top: 70px;">
+                    <li class="nav-item ">
+                        <a class="nav-link " aria-current="page " href="{% url 'archeological_site_search' %} ">ARCHEOLOGICAL SITES</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link " aria-current="page " href="{% url 'aboutus' %} ">ABOUT US</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link active " aria-current="page " href="{% url 'index' %} ">HOME</a>
+                    </li>
+                    
+
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+</html>

@@ -1,0 +1,48 @@
+{% extends 'dashboard/base.html' %} {% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-10">
+            <h4>Delete Category Information</h4>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-6">
+            <table class="table" style="color: #9f9f9f;">
+                <thead>
+                    <tr>
+                        <th scope="col">Category Name</th>
+                        <th scope="col">Category Image</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="table_category">
+
+                    {% if categorys %}
+                    <tr>
+                        <td>
+                            {{categorys.category_name}}
+                        </td>
+                        <td>
+                            <img src=" {{categorys.category_image.url}}" alt="" width="50px" height="50px">
+                        </td>
+                        <td>
+                            <p>
+                                <a href="{% url 'delete_category' categorys.id %}" class="btn btn-outline-danger">Delete</a>
+                                <a href="{% url 'info_category' %}" class="btn btn-outline-info">Back</a>
+                            </p>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td>No Record to show</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+{% endblock content %}

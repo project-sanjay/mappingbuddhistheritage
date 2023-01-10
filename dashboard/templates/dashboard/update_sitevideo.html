@@ -1,0 +1,33 @@
+{% extends 'dashboard/base.html' %} {% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-10">
+            <h4>Update State Image Information</h4>
+        </div>
+
+    </div>
+    <div class="row mt-2">
+        <div class="col-12">
+            <form action="">
+                <p style="margin-bottom: 10px;">
+                    Country
+                </p>
+                <select name="country" onchange="filterbycountry_id(this.value)" class="form-select back">
+                    <option value="0">All</option>
+                    {% for country in country_count %}
+                    <option value={{country.id}}>{{country.country_name}}</option>
+                    {% endfor %}
+                </select>
+            </form>
+            <br>
+            <form action="" method="post">
+                {% csrf_token %} {{form.as_p}}
+                <input type="submit" value="Update Video" class="button">
+                <a href="{% url 'update_sitedescription' pi.site_name.id %}" class="button">Back</a>
+            </form>
+
+        </div>
+    </div>
+</div>
+{% include "dashboard/bycountrywise.html"%}
+{% endblock content %}

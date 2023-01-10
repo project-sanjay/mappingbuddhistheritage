@@ -1,0 +1,33 @@
+{% extends 'dashboard/base.html' %} {% block content %} {% load embed_video_tags %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-8">
+            <h4>About Site Video</h4>
+            <a href="{% url 'info_sitevideo' %}" class="button">Back</a>
+        </div>
+    </div>
+    <div class="row mt-2">
+
+        {% if videos %} {% for video in videos %}
+        <div class="col-4">
+            <div class="card" style="background-color: #0f0f0f;">
+                {% video video.sitevideo_url 'tiny' %}
+                <div class="card-body">
+                    <h4 class="card-title"> {{video.site_name}}</h4>
+                    <h5 class="card-title"> {{video.sitevideo_name}}</h5>
+                    <p>
+                        <a href="{% url 'update_sitevideo' video.id %}" class="button">Edit</a>
+                        <input type="button" value="Delete" data-sid={{video.id}} class="button" id="btn_delete_sitevideo">
+                    </p>
+                </div>
+            </div>
+        </div>{% endfor %} {% endif %}
+
+    </div>
+
+
+    {%include 'dashboard/site_resource_ajax.html'%}
+</div>
+
+
+{% endblock content %}

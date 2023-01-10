@@ -1,0 +1,77 @@
+{% extends 'dashboard/base.html' %} {% block content %}
+<script>
+    $(document).ready(function() {
+        $("#search_category").on("keyup", function() {
+            var value = $(this).val().toLowerCase()
+            $("#table_category tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+    });
+</script>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h4>About Category</h4>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-12" id="message_info">
+
+            {% if messages %} {% for message in messages %} {{message}} {% endfor %} {% endif %}
+
+        </div>
+    </div>
+
+
+    <div class="row mt-2">
+        <div class="col-6">
+            <form action="{% url 'add_category' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %} {{form.as_p}}
+                <input type="submit" value="Save Category" class="button">
+            </form>
+        </div>
+        <div class="col-6">
+            <input type="text" id="search_category" class="form-control bg-dark text-white" placeholder="Search category here ...">
+            <table class="table" style="color: #9f9f9f;">
+                <thead>
+                    <tr>
+                        <th scope="col">+{{count_category}} Category Name</th>
+                        <th scope="col">Category Image</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="table_category">
+
+                    {% if categorys %} {% for category in categorys %}
+                    <tr>
+                        <td>
+                            {{category.category_name}}
+                        </td>
+                        <td>
+                            <img src=" {{category.category_image.url}}" alt="" width="50px" height="50px">
+                        </td>
+                        <td>
+                            <p>
+                                <a href="{% url 'update_category' category.id %}" class="button ">Edit</a>
+                                <a href="{% url 'delete_category_info' category.id %}" class="button">Delete</a>
+                            </p>
+                        </td>
+                    </tr>
+                    {% endfor %} {% else %}
+                    <tr>
+                        <td>No Record to show</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+
+
+</div>
+{% endblock content %}

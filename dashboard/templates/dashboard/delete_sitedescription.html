@@ -1,0 +1,90 @@
+{% extends 'dashboard/base.html' %} {% block content %} {% load embed_video_tags %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-10">
+            <h4>Delete Site Description Information</h4>
+        </div>
+
+    </div>
+    <div class="row mt-2">
+        <div class="col-4">
+            <table class="table " style="color: #9f9f9f;">
+                <thead>
+                    <tr>
+                        <th scope="col">Site</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="table_sitename">
+                    {% if info_sitedescription %}
+                    <tr>
+                        <td>
+                            <p>
+                                {{info_sitedescription.site_name}}
+                                <br> {{info_sitedescription.site_latitude}}
+                                <br>{{info_sitedescription.site_longitude}}
+                                <br>{{info_sitedescription.category_name}}
+                                <br>{{info_sitedescription.state_name.country_name}}
+                                <br>{{info_sitedescription.state_name}}
+                            </p>
+                        </td>
+
+                        <td>
+                            <p>
+                                <a href="{% url 'delete_sitedescription' info_sitedescription.id %} " class="btn btn-outline-danger">Delete</a>
+                                <a href="{% url 'info_sitedescription' %}" class="btn btn-outline-info">Back</a>
+                            </p>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td>No Record to show</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-4">
+            <table class="table " style="color: #9f9f9f;">
+                <thead>
+                    <tr>
+                        <th scope="col">Image</th>
+                    </tr>
+                </thead>
+                <tbody id="table_sitename">
+                    {% if info_sitedescription_image %} {% for image in info_sitedescription_image %}
+                    <tr>
+                        <td>
+                            <img src="{{image.siteimage_url.url}}" class="card-img-top" alt="...">
+                        </td>
+
+                    </tr>
+                    {% endfor %} {% endif %}
+                    </td>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-4">
+            <table class="table " style="color: #9f9f9f;">
+                <thead>
+                    <tr>
+                        <th scope="col">Video</th>
+                    </tr>
+                </thead>
+                <tbody id="table_sitename">
+                    {% if info_sitedescription_video %} {% for video in info_sitedescription_video %}
+                    <tr>
+                        <td>
+                            {% video video.sitevideo_url 'tiny' %}
+                        </td>
+                    </tr>
+                    {% endfor %} {% endif %}
+                    </td>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,71 @@
+{% extends 'dashboard/base.html' %} {% block content %} {% load static %}
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-1">
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}" ><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
+                        <path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1z"/>
+                      </svg></a>
+                    {% else %}
+                    <a href="?page={{count}}" > <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
+                        <path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1z"/>
+                      </svg></a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+
+        <div class="col-10">
+
+            {% if page_obj %} {% for image in page_obj %}
+            <div class="card" style="background-color: #1f1f1f;">
+                <img src="{{image.siteimage_url.url}} " class="card-img-top " alt="... ">
+                <div class="card-body ">
+                    <h5 class="card-title ">{{image.site_name}}</h5>
+                    <h5 class="card-title ">{{image.siteimage_name}}</h5>
+                    <p class="card-text ">{{image.siteimage_description|safe}}</p>
+                    <p>
+                        <a href="{% url 'update_siteimage' image.id %}" class="button">Edit</a>
+                        <input type="button" value="Delete" data-sid={{image.id}} class="button" id="btn_delete_siteimage">
+                    </p>
+                </div>
+            </div>
+            {% endfor %}{% endif %}
+        </div>
+        <div class="col-1 ">
+            <div class="pagination ">
+                <span class="step-links ">
+                    {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}  "><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-right-square-fill" viewBox="0 0 16 16">
+                    <path d="M0 14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v12zm4.5-6.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5a.5.5 0 0 1 0-1z"/>
+                  </svg></a>
+                {%else%}
+                <a href="?page=1 " ><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-right-square-fill" viewBox="0 0 16 16">
+                    <path d="M0 14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v12zm4.5-6.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5a.5.5 0 0 1 0-1z"/>
+                  </svg></a>
+                 {% endif %}
+                </span>
+            </div>
+        </div>
+
+    </div>
+    <div class="row mt-2">
+
+        <div class="col-2">
+            <a href="{% url 'info_siteimage' %}" class="button">Back</a>
+        </div>
+        <div class="col-10">
+            <p style="color: #7f7f7f;">
+                Note: To make this image as banner image. click to the edit button.
+            </p>
+        </div>
+    </div>
+
+    {%include 'dashboard/site_resource_ajax.html'%}
+
+</div>
+
+{% endblock content %}

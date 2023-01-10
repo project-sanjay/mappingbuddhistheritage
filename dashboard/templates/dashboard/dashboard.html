@@ -1,0 +1,96 @@
+{% extends 'dashboard/base.html' %} {% block content %} {% load static %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 full-height">
+            <div class="div" style="margin-top: 10vh;">
+                <form action="">
+                    <p style="margin-bottom: 10px;font-size: 20px;" class="texthighlighter">
+                        Country
+                    </p>
+                    <select name="country" onchange="filterbycountry(this.value)" class="form-select textbackground">
+                        <option value="0">All</option>
+                        {% for country in country_count %}
+                        <option value={{country.id}}>{{country.country_name}}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+            </div>
+            <div class="div" style="margin-top: 7vh;">
+                <form action="">
+                    <p style="margin-bottom: 10px;font-size: 20px;" class="texthighlighter">
+                        Region
+                    </p>
+                    <select name="state" id="stateid" onchange="filterbystate(this.value)" class="form-select textbackground">
+                        <option value="0">All</option>
+                    </select>
+                </form>
+            </div>
+            <div class="div">
+                <form action="" style="margin-top: 7vh;">
+                    <p style="margin-bottom: 10px;font-size: 20px;" class="texthighlighter">
+                        Category
+                    </p>
+                    <select name="category" id="categoryid" onchange="filterbycategory(this.value)" class="form-select textbackground">
+                        <option value="0">All</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-10">
+            <div class="ui-widget">
+                <div class="input-group mb-3">
+                    <span class="input-group-text search" id="basic-addon3">Search</span>
+                    <input type="text" id="sites" class="form-control black " id="basic-url" aria-describedby="basic-addon3" placeholder="enter sites name">
+                </div>
+            </div>
+            
+            <script>
+                $(function() {
+                    $("#sites").autocomplete({
+                        source: '{% url "autocomplete_search" %}',
+                        select: function(event, ui) {
+                            console.log(ui.item.label)
+                            $.ajax({
+                                    type: "POST",
+                                    url: "{% url 'get_site_id' %}", // name of url
+                                    data: {
+                                        site_name: ui.item.label, //page_number
+                                    },
+                                    success: function(resp) {
+                                        //loop
+                                        console.log(resp.results)
+                                        id = resp.results
+
+                                        for (i = 0; i < id.length; i++) {
+                                            console.log(id[i].id)
+                                            GetRedirectPage(id[i].id);
+                                        }
+                                    },
+                                    error: function() {}
+                                }) //
+                        }
+                    });
+
+                    function GetRedirectPage(id) {
+                        window.location.href = "/dashboard/info_sitedescription/update_sitedescription/" + id;
+                    }
+
+                });
+            </script>
+            <div id="posts" style="margin-top: 50px;margin-left: 50px; height: 500px;">
+
+                {% if page_obj%} {% for i in first_page %}
+                <span class="dot"></span>
+                <a href="{% url 'update_sitedescription' i.id %}" style="margin-left:10px; ">{{i.site_name}}</a><br> {% endfor %} {% endif %}
+            </div>
+            <div id="link" class="pagination">
+                {% for i in page_range %}
+            
+                    <a style="margin-left: 10px; font-size: 20px;" href="{{i}}" class="allcountry ">{{i}}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% include "dashboard/state_select.html"%}
+{% endblock content %}

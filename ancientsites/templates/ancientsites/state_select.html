@@ -1,0 +1,436 @@
+<script>
+    function filterbycountry(id) {
+        if (id == '0') {
+            var page_n = 1
+            $('#stateid').hide()
+            $('#categoryid').hide()
+                // here we using the ajax get the paginationand add data to the table
+            $.ajax({
+                    type: "POST",
+                    url: "{% url 'get_pagination_all' %}", // name of url
+                    data: {
+                        page_n: page_n, //page_number
+                    },
+                    success: function(resp) {
+                        //loop
+                        site = resp.results
+                        page = resp.page_range
+                        $('#posts').html('')
+                        for (i = 0; i < site.length; i++) {
+                            var url = "{%url 'archeological_site' id=0 %}".replace('0', site[i].id);
+                            $('#posts').append('<span class="dot"></span><a href=" ' + url + ' " " style="margin-left:10px">' + site[i].site_name + '</a></br>')
+                        }
+                        $('#link').html('')
+                        for (i = 1; i <= page.length; i++) {
+                            $('#link').append('<a class="filterpage" style="margin-left: 10px; font-size: 20px;" href="#" onclick="get_pagination_all(' +
+                                i + ')" >' + i + '</a> ')
+                        }
+                        for (i = 0; i < page.length; i++) {
+                            if ((page_n - 1) == i) {
+                                document.getElementsByClassName('filterpage')[page_n - 1].classList = "filterpage active"
+                            } else {
+                                document.getElementsByClassName('filterpage')[i].classList = "filterpage"
+                            }
+                        }
+
+                    },
+                    error: function() {}
+                }) // 
+        } else {
+            $('#stateid').show()
+            console.log('countrytest')
+            $.ajax({
+                url: "{% url 'get_state_list' %}",
+                method: "POST",
+                data: {
+                    id: id
+                },
+                dataType: 'json',
+                success: function(data) {
+                    console.log(data)
+                    x = data.state_list
+                    var output = "<option value=" + 0 + "> All</option>"
+                    for (i = 0; i < x.length; i++) {
+                        output += "<option value=" + x[i].id + ">" + x[i].state_name + "</option>"
+                    }
+                    console.log(output)
+                    $("#stateid").html(output)
+                    $('#categoryid').hide()
+                }
+            })
+            $.ajax({
+                    type: "POST",
+                    url: "{% url 'get_pagination_country' %}", // name of url 
+                    data: {
+                        page_n: 1, //page_number
+                        id: id
+                    },
+                    success: function(resp) {
+                        site = resp.results
+                        page = resp.page_range
+                        $('#posts').html('')
+                        for (i = 0; i < site.length; i++) {
+                            var url = "{%url 'archeological_site' id=0 %}".replace('0', site[i].id);
+                            $('#posts').append('<span class="dot"></span><a href=" ' + url + ' " " style="margin-left:10px">' + site[i].site_name + '</a></br>')
+                        }
+                        $('#link').html('')
+                        for (i = 1; i <= page.length; i++) {
+                            $('#link').append('<a class="filterpage" style="margin-left: 10px; font-size: 20px;" href="#" onclick="get_pagination_country(' +
+                                i + ',' +
+                                id + ')">' + i + '</a> ')
+                        }
+                        page_n = 1;
+                        for (i = 0; i < page.length; i++) {
+                            if ((page_n - 1) == i) {
+                                document.getElementsByClassName('filterpage')[page_n - 1].classList = "filterpage active"
+                            } else {
+                                document.getElementsByClassName('filterpage')[i].classList = "filterpage"
+                            }
+                        }
+                    },
+                    error: function() {}
+                }) // 
+        }
+        countryid = id
+    }
+
+    function filterbystate(id) {
+
+        if (id == '0') {
+            $.ajax({
+                    type: "POST",
+                    url: "{% url 'get_pagination_country' %}", // name of url 
+                    data: {
+                        page_n: 1, //page_number
+                        id: countryid
+                    },
+                    success: function(resp) {
+                        site = resp.results
+                        page = resp.page_range
+                        $('#posts').html('')
+                        for (i = 0; i < site.length; i++) {
+                            var url = "{%url 'archeological_site' id=0 %}".replace('0', site[i].id);
+                            $('#posts').append('<span class="dot"></span><a href=" ' + url + ' " " style="margin-left:10px">' + site[i].site_name + '</a></br>')
+                        }
+                        $('#link').html('')
+                        for (i = 1; i <= page.length; i++) {
+                            $('#link').append('<a class="filterpage" style="margin-left: 10px; font-size: 20px;" href="#" onclick="get_pagination_country(' +
+                                i + ',' +
+                                countryid + ')">' + i + '</a> ')
+
+                        }
+                        page_n = 1;
+                        for (i = 0; i < page.length; i++) {
+                            if ((page_n - 1) == i) {
+                                document.getElementsByClassName('filterpage')[page_n - 1].classList = "filterpage active"
+                            } else {
+                                document.getElementsByClassName('filterpage')[i].classList = "filterpage"
+                            }
+                        }
+                    },
+                    error: function() {}
+                }) // 
+            $('#categoryid').hide()
+        } else {
+
+            $('#categoryid').show()
+            $.ajax({
+                    url: "{% url 'get_category_list' %}",
+                    method: "POST",
+                    data: {
+                        id: id
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        console.log(data)
+                        x = data.category_list
+                        var output = "</option> <option value=" + 0 + "> All</option>"
+                        for (i = 0; i < x.length; i++) {
+                            output += "<option value=" + x[i].id_category + ">" + x[i].name_category + "</option>"
+                        }
+                        console.log(output)
+                        $("#categoryid").html(output)
+
+                    }
+                }) //
+            $.ajax({
+                    type: "POST",
+                    url: "{% url 'get_pagination_state' %}", // name of url 
+                    data: {
+                        page_n: 1, //page_number
+                        countryid: countryid,
+                        stateid: id
+                    },
+                    success: function(resp) {
+                        site = resp.results
+                        page = resp.page_range
+                        $('#posts').html('')
+                        for (i = 0; i < site.length; i++) {
+                            var url = "{%url 'archeological_site' id=0 %}".replace('0', site[i].id);
+                            $('#posts').append('<span class="dot"></span><a href=" ' + url + ' " " style="margin-left:10px">' + site[i].site_name + '</a></br>')
+                        }
+                        $('#link').html('')
+                        for (i = 1; i <= page.length; i++) {
+                            $('#link').append('<a class="filterpage" style="margin-left: 10px; font-size: 20px;" href="#" onclick="get_pagination_state(' + i + ',' +
+                                countryid + ',' +
+                                id + ')">' + i + '</a> ')
+
+                        }
+                        page_n = 1;
+                        for (i = 0; i < page.length; i++) {
+                            if ((page_n - 1) == i) {
+                                document.getElementsByClassName('filterpage')[page_n - 1].classList = "filterpage active"
+                            } else {
+                                document.getElementsByClassName('filterpage')[i].classList = "filterpage"
+                            }
+                        }
+                    },
+                    error: function() {}
+                }) // 
+
+        }
+        stateid = id
+    }
+
+    function filterbycategory(id) {
+        if (id == '0') {
+            $.ajax({
+                    type: "POST",
+                    url: "{% url 'get_pagination_state' %}", // name of url 
+                    data: {
+                        page_n: 1, //page_number
+                        countryid: countryid,
+                        stateid: stateid
+                    },
+                    success: function(resp) {
+                        site = resp.results
+                        page = resp.page_range
+                        $('#posts').html('')
+                        for (i = 0; i < site.length; i++) {
+                            var url = "{%url 'archeological_site' id=0 %}".replace('0', site[i].id);
+                            $('#posts').append('<span class="dot"></span><a href=" ' + url + ' " " style="margin-left:10px">' + site[i].site_name + '</a></br>')
+                        }
+                        $('#link').html('')
+                        for (i = 1; i <= page.length; i++) {
+                            $('#link').append('<a class="filterpage" style="margin-left: 10px; font-size: 20px;" href="#" onclick="get_pagination_state(' + i + ',' +
+                                countryid + ',' +
+                                stateid + ')">' + i + '</a> ')
+                        }
+                        page_n = 1;
+                        for (i = 0; i < page.length; i++) {
+                            if ((page_n - 1) == i) {
+                                document.getElementsByClassName('filterpage')[page_n - 1].classList = "filterpage active"
+                            } else {
+                                document.getElementsByClassName('filterpage')[i].classList = "filterpage"
+                            }
+                        }
+                    },
+                    error: function() {}
+                }) // 
+        } else {
+
+            $.ajax({
+                    type: "POST",
+                    url: "{% url 'get_pagination_category' %}", // name of url 
+                    data: {
+                        page_n: 1, //page_number
+                        countryid: countryid,
+                        stateid: stateid,
+                        categoryid: id
+                    },
+                    success: function(resp) {
+                        site = resp.results
+                        page = resp.page_range
+                        $('#posts').html('')
+                        for (i = 0; i < site.length; i++) {
+                            var url = "{%url 'archeological_site' id=0 %}".replace('0', site[i].id);
+                            $('#posts').append('<span class="dot"></span><a href=" ' + url + ' " " style="margin-left:10px">' + site[i].site_name + '</a></br>')
+                        }
+                        $('#link').html('')
+                        for (i = 1; i <= page.length; i++) {
+                            $('#link').append('<a class="filterpage" style="margin-left: 10px; font-size: 20px;" href="#" onclick="get_pagination_category(' + i + ',' +
+                                countryid + ',' +
+                                stateid + ',' +
+                                id + ')">' + i + '</a> ')
+                        }
+                        page_n = 1;
+                        for (i = 0; i < page.length; i++) {
+                            if ((page_n - 1) == i) {
+                                document.getElementsByClassName('filterpage')[page_n - 1].classList = "filterpage active"
+                            } else {
+                                document.getElementsByClassName('filterpage')[i].classList = "filterpage"
+                            }
+                        }
+                    },
+                    error: function() {}
+                }) //
+
+        }
+    }
+
+    $('.allcountry').click(function(event) {
+        event.preventDefault();
+        var page_n = $(this).attr('href');
+        console.log('page number' + page_n)
+            // ajax
+        $.ajax({
+            type: "POST",
+            url: "{% url 'get_pagination' %}", // name of url
+            data: {
+                page_n: page_n, //page_number
+            },
+            success: function(resp) {
+                //loop
+                site = resp.results
+                page = resp.page_range
+                console.log(page)
+                $('#posts').html('')
+                for (i = 0; i < site.length; i++) {
+                    var url = "{%url 'archeological_site' id=0 %}".replace('0', site[i].id);
+                    $('#posts').append('<span class="dot"></span><a href=" ' + url + ' " " style="margin-left:10px">' + site[i].site_name + '</a></br>')
+                }
+                for (i = 0; i < page.length; i++) {
+                    if ((page_n - 1) == i) {
+                        document.getElementsByClassName('allcountry')[page_n - 1].classList = "allcountry active"
+                    } else {
+                        document.getElementsByClassName('allcountry')[i].classList = "allcountry"
+                    }
+                }
+
+
+            },
+            error: function() {}
+        }); // 
+
+    });
+
+    function get_pagination_all(page_n) {
+        console.log('print')
+        var page_n = page_n
+        console.log(page_n)
+        $.ajax({
+            type: "POST",
+            url: "{% url 'get_pagination' %}", // name of url
+            data: {
+                page_n: page_n, //page_number
+            },
+            success: function(resp) {
+                //loop
+                site = resp.results
+                page = resp.page_range
+                $('#posts').html('')
+                for (i = 0; i < site.length; i++) {
+                    var url = "{%url 'archeological_site' id=0 %}".replace('0', site[i].id);
+                    $('#posts').append('<span class="dot"></span><a href=" ' + url + ' " " style="margin-left:10px">' + site[i].site_name + '</a></br>')
+                }
+                for (i = 0; i < page.length; i++) {
+                    if ((page_n - 1) == i) {
+                        document.getElementsByClassName('filterpage')[page_n - 1].classList = "filterpage active"
+                    } else {
+                        document.getElementsByClassName('filterpage')[i].classList = "filterpage"
+                    }
+                }
+            },
+            error: function() {}
+        }); //
+    }
+
+    function get_pagination_country(page_n, country_id) {
+        console.log('print')
+        var page_n = page_n
+        $.ajax({
+            type: "POST",
+            url: "{% url 'get_pagination_country' %}", // name of url
+            data: {
+                page_n: page_n, //page_number
+                id: country_id
+            },
+            success: function(resp) {
+                //loop
+                site = resp.results
+                $('#posts').html('')
+                for (i = 0; i < site.length; i++) {
+                    var url = "{%url 'archeological_site' id=0 %}".replace('0', site[i].id);
+                    $('#posts').append('<span class="dot"></span><a href=" ' + url + ' " " style="margin-left:10px">' + site[i].site_name + '</a></br>')
+                }
+                for (i = 0; i < page.length; i++) {
+                    if ((page_n - 1) == i) {
+                        document.getElementsByClassName('filterpage')[page_n - 1].classList = "filterpage active"
+                    } else {
+                        document.getElementsByClassName('filterpage')[i].classList = "filterpage"
+                    }
+                }
+            },
+            error: function() {}
+        }); //
+    }
+
+    function get_pagination_state(page_n, country_id, state_id) {
+        console.log('print')
+        var page_n = page_n
+        $.ajax({
+            type: "POST",
+            url: "{% url 'get_pagination_state' %}", // name of url
+            data: {
+                page_n: page_n, //page_number
+                countryid: countryid,
+                stateid: state_id
+            },
+            success: function(resp) {
+                //loop
+                site = resp.results
+                $('#posts').html('')
+                for (i = 0; i < site.length; i++) {
+                    var url = "{%url 'archeological_site' id=0 %}".replace('0', site[i].id);
+                    $('#posts').append('<span class="dot"></span><a href=" ' + url + ' " " style="margin-left:10px">' + site[i].site_name + '</a></br>')
+                }
+                for (i = 0; i < page.length; i++) {
+                    if ((page_n - 1) == i) {
+                        document.getElementsByClassName('filterpage')[page_n - 1].classList = "filterpage active"
+                    } else {
+                        document.getElementsByClassName('filterpage')[i].classList = "filterpage"
+                    }
+                }
+            },
+            error: function() {}
+        }); //
+    }
+
+    function get_pagination_category(page_n, country_id, state_id, category_id) {
+        console.log('print')
+        var page_n = page_n
+        $.ajax({
+            type: "POST",
+            url: "{% url 'get_pagination_category' %}", // name of url
+            data: {
+                page_n: page_n, //page_number
+                countryid: country_id,
+                stateid: state_id,
+                categoryid: category_id
+            },
+            success: function(resp) {
+                //loop
+                site = resp.results
+                $('#posts').html('')
+                for (i = 0; i < site.length; i++) {
+                    var url = "{%url 'archeological_site' id=0 %}".replace('0', site[i].id);
+                    $('#posts').append('<span class="dot"></span><a href=" ' + url + ' " " style="margin-left:10px">' + site[i].site_name + '</a></br>')
+                }
+                for (i = 0; i < page.length; i++) {
+                    if ((page_n - 1) == i) {
+                        document.getElementsByClassName('filterpage')[page_n - 1].classList = "filterpage active"
+                    } else {
+                        document.getElementsByClassName('filterpage')[i].classList = "filterpage"
+                    }
+                }
+            },
+            error: function() {}
+        }); //
+    }
+
+    function hideselect() {
+        $('#stateid').hide()
+        $('#categoryid').hide()
+    }
+   
+</script>

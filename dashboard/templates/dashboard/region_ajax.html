@@ -1,0 +1,266 @@
+<script>
+    //insert data into the country table
+    $("#btn_country_save").click(function() {
+        let country_output = ""
+        let country_id = $("#country_id").val();
+        let create_date = $("#country_create_date").val();
+        let country_name = $("#country_name").val();
+        let csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+        if (country_name == "") {
+            alert("Please enter the country name");
+        } else {
+            mydata = {
+                country_id: country_id,
+                create_date: create_date,
+                country_name: country_name,
+                csrfmiddlewaretoken: csrfmiddlewaretoken,
+            }
+            $.ajax({
+                url: "{%url 'add_country' %}",
+                method: "POST",
+                data: mydata,
+                dataType: "json",
+                success: function(data) {
+                    console.log(data)
+                    if (data.status == 1) {
+                        alert("Message: Successfully save data")
+                        console.log(data.countrys)
+                        country_output = ""
+                        x = data.countrys;
+                        for (i = 0; i < x.length; i++) {
+                            country_output += "<tr><td>" + x[i].country_name + "</td><td><p><input  type='button' value='Edit' class='btn btn-outline-warning btn_edit_country' data-sid= " + x[i].id + " /><input  type='button' value='Delete' class='btn btn-outline-danger btn_delete_country' data-sid= " + x[i].id + " /></p></td></tr>"
+                        }
+                        $("#thbody_country").html(country_output)
+                        $("form")[0].reset()
+                            //adding this data to the country select
+
+                        $('select[name="country_name"]').append("<option value='" + x[0].id + "'>" + x[0].country_name + "</option>");
+                        $("#country_id").val("")
+
+                    } else if (data.status == 2) {
+                        alert("Message: Update data successfully")
+                        country_output = ""
+                        x = data.countrys;
+                        for (i = 0; i < x.length; i++) {
+                            country_output += "<tr><td>" + x[i].country_name + "</td><td><p><input  type='button' value='Edit' class='btn btn-outline-warning btn_edit_country' data-sid= " + x[i].id + " /><input  type='button' value='Delete' class='btn btn-outline-danger btn_delete_country' data-sid= " + x[i].id + " /></p></td></tr>"
+                        }
+                        $("#thbody_country").html(country_output)
+                        $("form")[0].reset()
+
+                        console.log(document.getElementsByTagName('select'))
+                        var select_length = document.getElementsByTagName('select').length;
+                        var children_length;
+                        var edit_id;
+                        console.log(select_length);
+                        for (i = 0; i < select_length; i++) {
+                            console.log(document.getElementsByTagName('select')[i].children);
+                            children_length = document.getElementsByTagName('select')[i].children.length;
+                            console.log(children_length);
+                            for (j = 0; j < children_length; j++) {
+                                console.log(document.getElementsByTagName('select')[i].children[j].attributes[0].value);
+                                edit_id = document.getElementsByTagName('select')[i].children[j].attributes[0].value;
+                                if (country_id == edit_id) {
+                                    console.log("Yes " + country_id)
+                                    document.getElementsByTagName('select')[i].children[j].innerText = country_name;
+                                } else {
+                                    console.log("No " + country_id);
+                                }
+                            }
+                        }
+                        $("#country_id").val("")
+                    } else {
+                        alert("Message: Country name is already save")
+                        $("form")[0].reset()
+                    }
+                }
+            })
+        }
+    });
+    //edit data code
+    $("#thbody_country").on("click", ".btn_edit_country", function() {
+
+        let country_id = $(this).attr("data-sid");
+        let csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+        mydata = {
+            country_id: country_id,
+            csrfmiddlewaretoken: csrfmiddlewaretoken
+        }
+        $.ajax({
+            url: "{%url 'edit_country'%}",
+            method: "POST",
+            data: mydata,
+            dataType: "json",
+            success: function(data) {
+                $("#country_id").val(data.id)
+                $("#country_create_date").val(data.create_date)
+                $("#country_name").val(data.country_name)
+            },
+        })
+    });
+    //delete data code
+    $("#thbody_country").on("click", ".btn_delete_country", function() {
+
+        let country_id = $(this).attr("data-sid");
+        let csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+        mythis = this
+        mydata = {
+            country_id: country_id,
+            csrfmiddlewaretoken: csrfmiddlewaretoken
+        }
+        $.ajax({
+            url: "{%url 'delete_country'%}",
+            method: "POST",
+            data: mydata,
+            success: function(data) {
+
+                if (data.status == 1) {
+                    alert("Message: Data delete successfully")
+                    $(mythis).closest("tr").fadeOut();
+                    console.log(document.getElementsByTagName('select'))
+                    var select_length = document.getElementsByTagName('select').length;
+                    var children_length;
+                    var delete_id;
+                    var delete_index;
+                    console.log(select_length);
+                    for (i = 0; i < select_length; i++) {
+                        console.log(document.getElementsByTagName('select')[i].children);
+                        children_length = document.getElementsByTagName('select')[i].children.length;
+                        console.log(children_length);
+                        for (j = 0; j < children_length; j++) {
+                            console.log(document.getElementsByTagName('select')[i].children[j].attributes[0].value);
+                            delete_id = document.getElementsByTagName('select')[i].children[j].attributes[0].value;
+                            if (country_id == delete_id) {
+                                console.log("Yes " + country_id);
+                                delete_index = document.getElementsByTagName('select')[i].children[j].index
+                                $('select[name="country_name"] option:eq(' + delete_index + ')').remove();
+
+                            } else {
+                                console.log("No " + country_id);
+                            }
+                        }
+                    }
+                } else {
+                    alert("Message: Data delete unsuccessfully")
+                }
+            },
+
+        })
+    });
+    //insert data into state table
+    $("#btn_state_save").click(function() {
+        let state_output = "";
+        let stateid = $("#state_id").val();
+        console.log("stateid" + stateid)
+        let create_date = $("#state_create_date").val();
+        console.log("create_date" + create_date)
+        let state_name = $("#state_name").val();
+        console.log("state_name" + state_name);
+        let country_name_select_value = $("#country_name_select_value").val();
+        console.log("country_name_select_value" + country_name_select_value);
+        let csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+        if (state_name == "") {
+            alert("Please enter the state name");
+        } else if (country_name_select_value == "") {
+            alert("Please select the respective country name");
+        } else {
+            mydata = {
+                stateid: stateid,
+                create_date: create_date,
+                state_name: state_name,
+                country_name_select_value: country_name_select_value,
+                csrfmiddlewaretoken: csrfmiddlewaretoken,
+            }
+            $.ajax({
+                url: "{% url 'add_state'%}",
+                method: "POST",
+                data: mydata,
+                dataType: "json",
+                success: function(data) {
+                    console.log(data.status)
+                    if (data.status == 1) {
+                        alert("Message: Data save successfully");
+                        console.log(data.states);
+                        state_output = ""
+                        x = data.states;
+                        for (i = 0; i < x.length; i++) {
+                            state_output += "<tr><td>" + x[i].state_name + "</td><td>" + x[i].name + "</td><td><p><input  type='button' value='Edit' class='btn btn-outline-warning btn_edit_state' data-sid= " + x[i].id + " /><input  type='button' value='Delete' class='btn btn-outline-danger btn_delete_state' data-sid= " + x[i].id + " /></p></td></tr>"
+                        }
+                        $("#thbody_state").html(state_output)
+                        $("form")[1].reset()
+                        $("#state_id").val("")
+                        $("#country_name_select_value").val("")
+                    } else if (data.status == 2) {
+                        alert("Message: Update data successfully")
+                        state_output = ""
+                        x = data.states;
+                        for (i = 0; i < x.length; i++) {
+                            state_output += "<tr><td>" + x[i].state_name + "</td><td>" + x[i].name + "</td><td><p><input  type='button' value='Edit' class='btn btn-outline-warning btn_edit_state' data-sid= " + x[i].id + " /><input  type='button' value='Delete' class='btn btn-outline-danger btn_delete_state' data-sid= " + x[i].id + " /></p></td></tr>"
+                        }
+                        $("#thbody_state").html(state_output)
+                        $("form")[1].reset()
+                        $("#state_id").val("")
+                        $("#country_name_select_value").val("")
+                    }
+
+                }
+
+            }); // end of add ajax code
+        }
+    });
+    $(document).ready(function() {
+        $("#country_name_select").change(function() {
+            let country_name = $("#country_name_select option:selected");
+            $("#country_name_select_value").val(country_name.val());
+            $("#country_name_select_text").val(country_name.text())
+        });
+    });
+    //delete data code
+    $("#thbody_state").on("click", ".btn_delete_state", function() {
+
+        let stateid = $(this).attr("data-sid");
+        let csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+        mythis = this
+        mydata = {
+            stateid: stateid,
+            csrfmiddlewaretoken: csrfmiddlewaretoken
+        }
+        $.ajax({
+            url: "{%url 'delete_state'%}",
+            method: "POST",
+            data: mydata,
+            success: function(data) {
+
+                if (data.status == 1) {
+                    alert("Message: Data delete successfully")
+                    $(mythis).closest("tr").fadeOut();
+                } else {
+                    alert("Message: Data delete unsuccessfully")
+                }
+            },
+
+        })
+    });
+    //edit data code
+    $("#thbody_state").on("click", ".btn_edit_state", function() {
+
+        let state_id = $(this).attr("data-sid");
+        let csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+        mydata = {
+            state_id: state_id,
+            csrfmiddlewaretoken: csrfmiddlewaretoken
+        }
+        $.ajax({
+            url: "{%url 'edit_state'%}",
+            method: "POST",
+            data: mydata,
+            dataType: "json",
+            success: function(data) {
+                console.log(data.states.id)
+                $("#state_id").val(data.states.id)
+                $("#state_create_date").val(data.states.create_date)
+                $("#state_name").val(data.states.state_name)
+                $("#country_name_select_text").val(data.states.name)
+            },
+        })
+    });
+</script>

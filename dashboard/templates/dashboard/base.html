@@ -1,0 +1,75 @@
+<!DOCTYPE html> {% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="icon" type="image/png" href="{%static 'images/MBH_Logo_100px.png'%}"/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/adminstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'css/leaflet.css' %}" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <script src="{% static 'js/jquery.js' %} "></script>
+    <script src="{% static 'js/popper.js' %} "></script>
+    <script src="{% static 'js/bootstrap.js' %} "></script>
+    <script src="{% static 'js/myscript.js' %} "></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+
+</head>
+
+<body onload="hideselect()">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-white">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+            Admin Panel</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{% url 'dashboard_show' %}">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'info_sitedescription' %}">Upload New Sites</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'info_siteimage' %}">Upload Images</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'info_sitevideo' %}">Upload Videos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'info_category' %}">Category</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'region' %}">Region</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'change_password' %}">Change Password</a>
+                    </li>
+                   
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                   
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row mt-2 ">
+            <div class="col-12 ">
+                {% block content %} {% endblock content %}
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

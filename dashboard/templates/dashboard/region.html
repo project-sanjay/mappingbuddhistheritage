@@ -1,0 +1,151 @@
+{% extends 'dashboard/base.html' %} {% block content %}
+<script>
+    $(document).ready(function() {
+        $("#country_name").on("keyup", function() {
+            var value = $(this).val().toLowerCase()
+            $("#thbody_country tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $("#state_name").on("keyup", function() {
+            var value = $(this).val().toLowerCase()
+            $("#thbody_state tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $("#country_name_select_search").on("keyup", function() {
+            var value = $(this).val().toLowerCase()
+            $("#thbody_state tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+    });
+</script>
+<div class="container-fluid">
+    <div class="row mt-2">
+        <div class="row">
+            <div class="col-12">
+                <h4>About Region</h4>
+            </div>
+        </div>
+
+    </div>
+    <div class="row mt-2">
+        <div class="col-4">
+            <form action="#" method="post">
+                {% csrf_token %} <input type="hidden" name="countryid" id="country_id" value="">
+                <input type="hidden" name="create_date" id="country_create_date">
+                <p>
+                    <label for="country_name" class="form-label">Country Name</label>
+                    <input type="text" class="form-control back" id="country_name">
+                </p>
+                <input type="button" value="Save Country" class="button" id="btn_country_save">
+            </form>
+
+            <table class="table" style="color: #9f9f9f;">
+                <thead>
+                    <tr>
+                        <th scope="col">Country Name</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="thbody_country">
+                    {% if countrys %} {% for country in countrys %}
+                    <tr>
+                        <td>
+                            {{country.country_name}}
+                        </td>
+                        <td>
+                            <p>
+                                <input type="button" value="Edit" data-sid={{country.id}} class="button  btn_edit_country">
+                                <input type="button" value="Delete" data-sid={{country.id}} class="button  btn_delete_country">
+                            </p>
+                        </td>
+                    </tr>
+                    {% endfor %} {% else %}
+                    <tr>
+                        <td>No Record to show</td>
+                        <td></td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+
+        </div>
+        <div class="col-8">
+            <form action="#" method="post">
+                {% csrf_token %} <input type="hidden" name="stateid" id="state_id" value="">
+                <input type="hidden" name="create_date" id="state_create_date">
+                <p>
+                    <label for="state_name" class="form-label">State Name</label>
+                    <input type="text" class="form-control back" id="state_name">
+                </p>
+                <p>
+                    <label for="country_name" class="form-label">Select Country</label>
+                    <select class="form-select back" aria-label="Default select example" name="country_name" id="country_name_select" required>
+                        <option selected>select the Country</option>
+                        {% for country in countrys %}
+                        <option value={{country.id}}> {{country.country_name}}</option>
+                        {% endfor %}
+                      </select>
+                </p>
+                <p>
+                    <input type="hidden" name="country_name_select" id="country_name_select_value" class="form-control back" maxlength="200" required>
+                </p>
+                <p>
+                    <input type="hidden" name="country_name_select" id="country_name_select_text" class="form-control back" maxlength="200" required readonly>
+                </p>
+
+                <input type="button" value="Save State" class="button" id="btn_state_save">
+            </form>
+
+            <table class="table" style="color: #9f9f9f;">
+                <thead>
+                    <tr>
+                        <th scope="col">State Name</th>
+                        <th scope="col"><input type="text" name="country_name_select" id="country_name_select_search" class="form-control back"  placeholder='search country' required></th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="thbody_state"> {% if states %} {% for state in states %}
+                    <tr>
+                        <td>
+                            {{state.state_name}}
+                        </td>
+                        <td>
+                            {{state.country_name}}
+                        </td>
+                        <td>
+                            <p>
+                                <input type="button" value="Edit" data-sid={{state.id}} class="button btn_edit_state">
+                                <input type="button" value="Delete" data-sid={{state.id}} class="button btn_delete_state">
+                            </p>
+                        </td>
+                    </tr>
+                    {% endfor %}{% else %}
+                    <tr>
+                        <td>No Record to show</td>
+                        <td></td>
+                        <td></td>
+                    </tr> {% endif %}
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+    {%include 'dashboard/region_ajax.html'%}
+
+</div>
+
+
+{% endblock content %} s

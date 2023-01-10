@@ -1,0 +1,119 @@
+{% extends 'dashboard/base.html' %} {% block content %}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h4>About Map</h4>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-12" id="message_info">
+            {% if messages %} {% for message in messages %} {{message}} {% endfor %} {% endif %}
+        </div>
+    </div>
+    <div class="row mt-2">
+        {% if categorys %} {% for category in categorys %}
+        <div class="col-2">
+            <img src=" {{category.category_image.url}}" alt="" width="25px" height="25px" id={{category.id}}> {{category.category_name}}
+        </div> {% endfor %} {% endif %}
+    </div>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script>
+        let map;
+        let marker;
+        let infowindow;
+        let data_infowindow;
+        let image;
+        let category_id = document.getElementById('73').src;
+        console.log(category_id);
+
+        function initMap() {
+            $(document).ready(function() {
+                $.ajax({
+                    url: "get_map_data",
+                    method: "POST",
+                    success: function(data) {
+                            map = new google.maps.Map(document.getElementById("map"), {
+                                center: {
+                                    lat: 27.7500,
+                                    lng: 83.5000
+                                },
+                                mapTypeId: google.maps.MapTypeId.HYBRID,
+                                zoom: 5,
+
+                            });
+                            console.log(data.sites)
+                            var x = data.sites
+                            for (i = 0; i < x.length; i++) {
+                                console.log('site_latitude ' + x[i].site_latitude + '</br>')
+                                console.log('site_longitude ' + x[i].site_longitude + '</br>')
+                                data_infowindow = '<div class="container-fluid">' +
+                                    '<div class="row">' +
+                                    '<div class="col-12">' +
+                                    '<a href="#" style="font-size:24px" class="text-dark">' + x[i].site_name + '</a>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '<div class="row mt-2">' +
+                                    '<div class="col-6">' +
+                                    '<h6 class="text-info">' + x[i].name_country + '</h6>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '<div class="row">' +
+                                    '<div class="col-6">' +
+                                    '<h6 class="text-info">' + x[i].name_state + '</h6>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>';
+                                infowindow = new google.maps.InfoWindow({
+                                    content: data_infowindow,
+                                    position: {
+                                        lat: x[i].site_latitude,
+                                        lng: x[i].site_longitude
+                                    }
+                                });
+                                var icon = {
+                                    url: document.getElementById('' +
+                                        x[i].category_url + '').src, // url
+                                    // url: "http://localhost:8000/abcs/" + x[i].category_url, // url
+                                    scaledSize: new google.maps.Size(25, 25), // scaled size
+                                    origin: new google.maps.Point(0, 0), // origin
+                                    anchor: new google.maps.Point(0, 0) // anchor
+                                };
+
+                                marker = new google.maps.Marker({
+                                    map: map,
+                                    title: x[i].site_name,
+                                    position: {
+                                        lat: x[i].site_latitude,
+                                        lng: x[i].site_longitude
+                                    },
+                                    mapTypeId: google.maps.MapTypeId.HYBRID,
+                                    icon: icon,
+                                });
+                                google.maps.event.addListener(marker, 'click', (function(marker, data_infowindow, infowindow) {
+                                    return function() {
+                                        infowindow.setContent(data_infowindow);
+                                        infowindow.open(map, marker);
+                                    };
+                                })(marker, data_infowindow, infowindow));
+
+                            } // end of for loop
+
+                        } // end of fnction data
+                }); // end of ajax
+            }); // end of function
+
+
+        } // end ofunitMap
+    </script>
+    <div class="row mt-2">
+        <div class="col-12" id="map">
+        </div>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqibMN4oy4SVfbTXDrUmF7Tt8vBz_R-0k&callback=initMap&v=weekly" async></script>
+    </div>
+
+</div>
+
+
+{% endblock content %}

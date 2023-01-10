@@ -1,0 +1,215 @@
+{% extends 'ancientsites/base.html' %}{% load static %} {% block content %}
+<div class="container-md">
+    <div class="row">
+        <div class="col-md-12">
+            <img src="{%static 'images/Front_Image.jpg'%}" alt="" class="d-inline-block align-text-top" width="100%">
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-md-12">
+            <h1 style="color: #7f7f7f; font-size: 150px;font-family: 'Oswald', sans-serif;">GRATEFUL TO...</h1>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="row">
+                    <div class="col-md-10">
+                        <a href="https://en.wikipedia.org/wiki/Xuanzang" target="_blank" >  <img src="{%static 'images/Xuanzang_Round__bw.png'%}" class="card-img-top" alt="..."> </a>
+                    </div>
+                    <div class="col-md-10 text-center mt-md-2">
+                        <a href="https://en.wikipedia.org/wiki/Xuanzang" target="_blank" class="texthighlighter">Master Xuanzang</a>
+                    </div>
+                    <div class="col-md-10 text-center texthighlighter">
+                        (602-664 CE)
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="row">
+                    <div class="col-md-10">
+                        <a href="https://en.wikipedia.org/wiki/Alexander_Cunningham" target="_blank" > <img src="{%static 'images/Sir_Alexander_Cunningham_Round_image_bw.png'%}" class="card-img-top" alt="..."> </a>
+                    </div>
+                    <div class="col-md-10 text-center mt-md-2">
+                        <a href="https://en.wikipedia.org/wiki/Alexander_Cunningham" target="_blank" class="texthighlighter">Sir Alexander Cunningham</a>
+                    </div>
+                    <div class="col-md-10 text-center texthighlighter">
+                        (23 Jan 1814 -28 Nov 1893)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="row">
+                    <div class="col-md-10">
+                        <a href="https://en.wikipedia.org/wiki/James_Prinsep" target="_blank" > <img src="{%static 'images/JamesPrinsep_Round_image_bw.png'%}" class="card-img-top" alt="..."> </a>
+                    </div>
+                    <div class="col-md-10 text-center mt-md-2">
+                        <a href="https://en.wikipedia.org/wiki/James_Prinsep" target="_blank" class="texthighlighter">James Prinsep</a>
+                    </div>
+                    <div class="col-md-10 text-center texthighlighter">
+                        (20 Aug 1799 -22 Apr 1840)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-md-12">
+            <h1 style="font-family: 'Oswald', sans-serif;color:#9e9e9e">Hi,</h1>
+            <p style="text-align: justify">
+                Myself Sanjay Jambhulkar and my partner Dr. Yojana Bhagat would like to share with you all our journeys of over 20 years in search of Buddhist heritage sites all over India and beyond. Overcoming many difficulties we have personally explored, studied,
+                photographed and have become rich with experiential knowledge.
+            </p>
+            <p style="text-align: justify;">
+                Now we are mapping them for you so that you can take the study further and continue the legacy of the great explorers with gratitude and be the part of the great historical journey of exploration of Buddhist heritage.
+            </p>
+            <p style="text-align: justify;">
+                The journey started 2600 years ago when the Buddha left his footprints in the form of dhamma which was traced and made firm by Emperor Asoka with his huge rock and Pillar inscriptions in Brahmi script.
+            </p>
+            <p style="text-align: justify;">
+                The greatest explorer of the world, the Buddhist scholar and traveller Xuang Xang walked from China to India and back recording complete geographical Buddhist India of 7th CE in his diary.
+            </p>
+            <p style="text-align: justify;">
+                But unfortunately India not only lost Buddhism but forgot the Buddha, Emperor Asoka and regrettably even to read our own Brahmi script and thus plunged into the ignorance for 1000 years
+            </p>
+            <p style="text-align: justify;">
+                About 200 years ago the Western scholars discovered Buddha again. James Princep deciphered Brahmi script and opened the new vista of knowledge which introduced us to Emperor Asoka. With the help of Xuang Xang’s diary Sir Alexander Cunningham explored
+                the Buddhist heritage and discovered the lost traces of the footsteps of the Buddha
+            </p>
+            <p style="text-align: justify;">
+                I cannot think how I could have known the truth- the Buddha - had it not been for Emperor Asoka, Master Xuang Zang, James Prinsep and Sir Alexander Cunningham. Thanks for being there to make me what I am today……
+            </p>
+            <p style="text-align: justify;">
+                So Lets E X P L O R E. . . . . .
+            </p>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-md-12 text-md-center">
+            <P class="texthighlighter">|| PHOTOS AND INFORMATIONS OF THIS WEBSITE IS FREE TO COPY AND DOWNLOAD ||</P>
+        </div>
+    </div>
+    <hr>
+    <div class="row mt-2">
+        <marquee behavior="" direction="left" scrollamount=10 onmouseover="this.stop();" onmouseout="this.start();">
+            {% for image in images %}
+            <a href="{%url 'archeological_site_images' image.site_name_id image.id %}"> <img src="{{image.siteimage_url.url}}" alt="..."  height="150px" title="{{image.siteimage_name}}" class="ms-md-4"></a> {% endfor %}
+        </marquee>
+    </div>
+    <hr>
+    <div class="row mt-2 ">
+        {% if categorys %} {% for category in categorys %}
+        <div class="col-md-auto m-md-0 p-md-2" style="font-size: 14px;">
+            <img src=" {{category.category_image.url}} " alt=" " width="25px " height="25px " id={{category.id}}> {{category.category_name}}
+        </div> {% endfor %} {% endif %}
+    </div>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script>
+        let map;
+        let marker;
+        let infowindow;
+        let data_infowindow;
+        let image;
+
+
+        function initMap() {
+            $(document).ready(function() {
+                $.ajax({
+                    url: "get_map_data",
+                    method: "POST",
+                    success: function(data) {
+                            map = new google.maps.Map(document.getElementById("map"), {
+                                center: {
+                                    lat: 22.6955975,
+                                    lng: 80.0795639
+                                },
+                                mapTypeId: google.maps.MapTypeId.HYBRID,
+                                zoom: 4.75,
+
+                            });
+                            var x = data.sites
+                            var marker = [];
+                            for (i = 0; i < x.length; i++) {
+                                console.log('site_latitude ' + x[i].site_latitude + '</br>')
+                                console.log('site_longitude ' + x[i].site_longitude + '</br>')
+                                var id = x[i].id;
+                                var url = "{%url 'archeological_site' id=0 %} ".replace('0', id);
+                                console.log(url)
+                                data_infowindow = '<div class="container-fluid ">' +
+                                    '<div class="row ">' +
+                                    '<div class="col-12 ">' +
+                                    '<a href=" ' +
+                                    url + ' " style="font-size:24px;color:#ff6600; ">' + x[i].site_name + '</a>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '<div class="row mt-2 ">' +
+                                    '<div class="col-6 ">' +
+                                    '<h6 class="gray">' + x[i].name_country + '</h6>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '<div class="row ">' +
+                                    '<div class="col-6 ">' +
+                                    '<h6 class="gray ">' + x[i].name_state + '</h6>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>';
+                                infowindow = new google.maps.InfoWindow({
+                                    content: data_infowindow,
+                                    position: {
+                                        lat: x[i].site_latitude,
+                                        lng: x[i].site_longitude
+                                    }
+                                });
+                                var icon = {
+                                    url: document.getElementById('' +
+                                        x[i].category_url + '').src, // url
+                                    // url: "http://localhost:8000/abcs/ " + x[i].category_url, // url
+                                    scaledSize: new google.maps.Size(25, 25), // scaled size
+                                    origin: new google.maps.Point(0, 0), // origin
+                                    anchor: new google.maps.Point(0, 0) // anchor
+                                };
+
+                                marker[i] = new google.maps.Marker({
+
+                                    title: x[i].site_name,
+                                    position: {
+                                        lat: x[i].site_latitude,
+                                        lng: x[i].site_longitude
+                                    },
+                                    mapTypeId: google.maps.MapTypeId.HYBRID,
+                                    icon: icon,
+                                    url: "{%url 'archeological_site' id=0 %} ".replace('0', x[i].id),
+                                    map: map,
+                                });
+                            } // end of for loop
+
+                            for (i = 0; i < marker.length; i++) {
+                                console.log(marker[i].url)
+                                google.maps.event.addListener(marker[i], 'click', function() {
+                                    window.location.href = this.url; //changed from markers[i] to this
+                                });
+                            }
+                        } // end of fnction data
+                }); // end of ajax
+            }); // end of function
+
+
+        } // end of iunitMap
+    </script>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12" id="map">
+        </div>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqibMN4oy4SVfbTXDrUmF7Tt8vBz_R-0k&callback=initMap&v=weekly" async></script>
+    </div>
+</div>
+
+{% endblock content %}

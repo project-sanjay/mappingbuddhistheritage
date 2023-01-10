@@ -1,0 +1,81 @@
+{% extends 'dashboard/base.html' %} {% block content %}
+<script>
+    $(document).ready(function() {
+        $("#search_site").on("keyup", function() {
+            var value = $(this).val().toLowerCase()
+            $("#table_sitename tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+    });
+</script>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 fs-2 texthighlighter">
+           ADD NEW SITES
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-12" id="message_info">
+            {% if messages %} {% for message in messages %} {{message}} {% endfor %} {% endif %}
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-12">
+            <form action="">
+                <p style="margin-bottom: 10px;">
+                    Country
+                </p>
+                <select name="country" onchange="filterbystate_id(this.value)" class="form-select back">
+                    <option>.......</option>
+                    {% for country in country_count %}
+                    <option value={{country.id}}>{{country.country_name}}</option>
+                    {% endfor %}
+                </select>
+            </form>
+            <br>
+            <form action="{% url 'add_sitedescription' %}" method="post">
+                {% csrf_token %} {{form.media}} {{form.as_p}}
+                
+                <input type="submit" value="Save" class="button">
+            </form>
+        </div>
+       <!-- <div class="col-4">
+            <input type="text" id="search_site" class="form-control bg-dark text-white" placeholder="Search site name here ...">
+            <table class="table " style="color: #9f9f9f;">
+                <thead>
+                    <tr>
+                        <th scope="col">+{{count_sitedescription}} Site</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="table_sitename">
+                    {% if sites %} {% for site in sites %}
+                    <tr>
+                        <td>
+                            <p>
+                                {{site.site_name}}
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                <a href="{% url 'update_sitedescription' site.id %} " class="btn btn-outline-warning">Edit</a>
+                                <a href="{% url 'delete_sitedescription_info' site.id %} " class="btn btn-outline-danger">Delete</a>
+                            </p>
+                        </td>
+                    </tr>
+                    {% endfor %} {% else %}
+                    <tr>
+                        <td>No Record to show</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div> -->
+    </div>
+
+</div>
+{% include "dashboard/bycountrywise.html"%}
+{% endblock content %}

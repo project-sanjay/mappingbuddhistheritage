@@ -1,0 +1,74 @@
+{% extends 'dashboard/base.html' %} {% block content %}
+<script>
+    $(document).ready(function() {
+        $("#search_site").on("keyup", function() {
+            var value = $(this).val().toLowerCase()
+            $("#table_sitename tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+    });
+</script>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h4>About Site Images</h4>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-12" id="message_info">
+
+            {% if messages %} {% for message in messages %} {{message}} {% endfor %} {% endif %}
+
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        
+        <div class="col-12">
+            <form action="{% url 'add_siteimage' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %} {{form.media}}{{form.as_p}}
+                <input type="submit" value="Save Image" class="btn btn-outline-success">
+            </form>
+        </div>
+       <!-- <div class="col-5">
+            <input type="text" id="search_site" class="form-control bg-dark text-white" placeholder="Search site name here ...">
+            <table class="table" style="color: #9f9f9f;">
+                <thead>
+                    <tr>
+                        <th scope="col">Site Name</th>
+                        <th scope="col">Total Images Upload</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="table_sitename">
+                    {% if totals %} {% for total in totals %}
+                    <tr>
+
+                        <td>
+                            {{total.site_name}}
+                        </td>
+                        <td>
+                            {{total.counts}} +
+                        </td>
+                        <td>
+                            <p>
+                                <a href="{% url 'info_siteimage_individual' total.id %}" class="btn btn-outline-warning">Show</a>
+                            </p>
+                        </td>
+                    </tr>
+                    {% endfor %} {% else %}
+                    <tr>
+                        <td>No Record to show</td>
+                        <td></td>
+                        <td></td>
+                    </tr>{% endif %}
+                </tbody>
+            </table>
+
+        </div> -->
+    </div>
+
+</div>
+
+{% endblock content %}

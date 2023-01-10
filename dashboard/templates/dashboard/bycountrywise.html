@@ -1,0 +1,71 @@
+<script>
+    stateid=0
+    function filterbycountry_id(id) {
+
+        $.ajax({
+            type: "POST",
+            url: "{% url 'get_state_list' %}", // name of url
+            data: {
+                id: id, //page_number
+            },
+            dataType: 'json',
+            success: function(data) {
+                //loop
+                x = data.state_list
+                var output = "<option>..............</option>"
+                for (i = 0; i < x.length; i++) {
+                        output += "<option value=" + x[i].id + ">" + x[i].state_name + "</option>"
+                    }
+                console.log(output)
+                $("#stateid").html(output)
+            },
+            error: function() {}
+        }) //      
+    }
+    function filterbystate_id(id) {
+        stateid=id
+        $.ajax({
+            url: "{% url 'get_category_list' %}",
+            method: "POST",
+            data: {
+                id: stateid
+            },
+            dataType: 'json',
+            success: function(data) {
+                console.log(data)
+                x = data.category_list
+                var output = "<option>........</option>"
+                for (i = 0; i < x.length; i++) {
+                    output += "<option value=" + x[i].id_category + ">" + x[i].name_category + "</option>"
+                }
+                console.log(output)
+                $("#categoryid").html(output)
+            }
+        }) 
+    }
+    
+    function filterbycategory_id(id) {
+        console.log(id)
+        console.log(stateid)
+        $.ajax({
+           url: "{% url 'get_site_list' %}",
+           method: "POST",
+           data: {
+               stateid: stateid,
+               categoryid:id
+           },
+           dataType: 'json',
+           success: function(data) {
+               console.log(data)
+               x = data.site_list
+               var output = "<option>........</option>"
+               for (i = 0; i < x.length; i++) {
+                   output += "<option value=" + x[i].id + ">" + x[i].site_name + "</option>"
+               }
+               console.log(output)
+               $("#id_site_name").html(output)
+           }
+       }) 
+       }
+    
+</script>

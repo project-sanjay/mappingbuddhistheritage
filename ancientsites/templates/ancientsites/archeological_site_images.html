@@ -1,0 +1,72 @@
+{% extends 'ancientsites/base.html' %}{% load static %} {% block content %}
+<div class="container-fluid">
+    <div class="row mt-2">
+
+        <div class="col-md-12">
+
+            {% if page_obj %} {% for image in page_obj %}
+            <div class=" position-relative">
+                <div class=" position-absolute top-50 start-0 translate-middle-y">
+                    <span class="step-links">
+                        {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}">
+                            <img src="{%static 'images/Left_Arrow.png'%}" alt="" class="d-inline-block align-text-top" width="100%">
+                        </a>
+                        {% else %}
+                        <a href="?page={{count}}" >  
+                            <img src="{%static 'images/Left_Arrow.png'%}" alt="" class="d-inline-block align-text-top" width="100%"></a>
+                        {% endif %}
+                    </span>
+                </div>
+                <img src="{{image.siteimage_url.url}} " alt="... " width="100%">
+                <div class=" position-absolute top-50 end-0 translate-middle-y">
+                    <span class="step-links ">
+                        {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}  " >
+                        <img src="{%static 'images/Right_Arrow.png'%}" alt="" class="d-inline-block align-text-top" width="100%"></a>
+                    {%else%}
+                    <a href="?page=1" >
+                        <img src="{%static 'images/Right_Arrow.png'%}" alt="" class="d-inline-block align-text-top" width="100%"></a>
+                     {% endif %}
+                    </span>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row mt-2">
+                    <div class="col-md-2">
+                        <h5 class="texthighlighter">{{image.site_name}} :</h5> 
+                        <!--<b class=" texthighlighter">Description :</b> -->
+                    </div>
+                    <div class="col-md-10">
+                        <h5>{{image.siteimage_name}}</h5>
+                    </div>
+                <div class="row mt-2">
+                    <div class="col-md-10 offset-md-2">
+                        <p class="" style="text-align: justify;">{{image.siteimage_description|safe}}</p>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+
+            {% endfor %}{% endif %}
+        </div>
+
+
+    </div>
+    <div class="row mt-2">
+        <div class="col-md-12">
+            <a href="{%url 'archeological_site' site_id %}">Back to {{site_name.site_name}}</a>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endblock content %}

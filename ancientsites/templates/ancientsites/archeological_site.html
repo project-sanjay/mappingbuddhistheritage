@@ -1,0 +1,135 @@
+{% extends 'ancientsites/base.html' %}{% load static %} {% block content %}{% load embed_video_tags %}
+<div class="container-fluid-lg">
+    <div class="row">
+        {% if banner_image %}
+        <div class="col-md-12"><img src="{{banner_image.siteimage_url.url}}" width="100%" alt="..."> </div>
+        {% endif %}
+
+    </div>
+</div>
+<div class="container-md">
+    <div class="row mt-2">
+
+        <div class="col-md-12">
+            <h1 class="texthighlighter text-uppercase" id="site_name" style="font-size: 40px;">{{info.site_name}}</h1>
+            <h2 id="latitude" style="display: none;">{{info.site_latitude}}</h2>
+            <h2 id="longitude" style="display: none;">{{info.site_longitude}}</h2>
+            <h2 id="category_id" style="display: none;">{{info.category_name.id}}</h2>
+        </div>
+
+    </div>
+    <div class="row mt-2">
+        <div class="col-md-12">
+            Also Known as : <b class="texthighlighter">{{info.site_also_name}}</b>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        {% if images %} {% for image in images %}
+        <div class="col-md-3 mt-md-4">
+            <div class="card">
+                <a href="{%url 'archeological_site_images' image.site_name_id image.id %}">
+                    <img src="{{image.siteimage_url.url}}" class="card-img-top" alt="" width="250px" height="150px" title="{{image.siteimage_name}}">
+                </a>
+            </div>
+        </div>
+        {% endfor %} {% endif %}
+    </div>
+
+    <div class="row mt-5">
+        <b class="texthighlighter">Description :</b>
+        <div class="col-md-11 offset-md-1 textalign">
+            {{info.site_description|safe}}
+        </div>
+    </div>
+    <div class="row mt-5" style="display: none;">
+        {% if categorys %} {% for category in categorys %}
+        <div class="col-md-2 text-center">
+            <img src=" {{category.category_image.url}}" alt="" width="25px" height="25px" id={{category.id}}> {{category.category_name}}
+        </div> {% endfor %} {% endif %}
+    </div>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script>
+        let map;
+        let marker;
+        let infowindow;
+        let data_infowindow;
+        let image;
+        let lat = document.getElementById('latitude').innerText;
+        let lng = document.getElementById('longitude').innerText;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("maptosite"), {
+                center: {
+                    lat: parseFloat(lat),
+                    lng: parseFloat(lng)
+                },
+                mapTypeId: google.maps.MapTypeId.HYBRID,
+                zoom: 20,
+            });
+
+            data_infowindow = '<div class="container-fluid">' +
+                '<div class="row">' +
+                '<div class="col-12">' +
+                '<a href="#" style="font-size:24px;color:red;">' + document.getElementById('site_name').innerText + '</a>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+            infowindow = new google.maps.InfoWindow({
+                content: data_infowindow,
+                position: {
+                    lat: parseFloat(lat),
+                    lng: parseFloat(lng)
+                }
+            });
+            var category_id = document.getElementById('category_id').innerText
+            var icon = {
+                url: document.getElementById('' +
+                    category_id + '').src, // url
+                // url: "http://localhost:8000/abcs/" + x[i].category_url, // url
+                scaledSize: new google.maps.Size(50, 50), // scaled size
+                origin: new google.maps.Point(0, 0), // origin
+                anchor: new google.maps.Point(0, 0) // anchor
+            };
+            var query = '"' + parseFloat(lat) + '"%2C"' + parseFloat(lng) + '"'
+            console.log(query)
+            marker = new google.maps.Marker({
+                title: document.getElementById('site_name').innerText,
+                position: {
+                    lat: parseFloat(lat),
+                    lng: parseFloat(lng)
+                },
+                mapTypeId: google.maps.MapTypeId.HYBRID,
+                icon: icon,
+                url: 'https://www.google.com/maps/search/?api=1&query="' + query + '"',
+                map: map
+            });
+            google.maps.event.addListener(marker, 'click', function() {
+                //window.location.href = marker.url;
+                //window.open(marker.url,'_blank')
+                window.open(marker.url,'_blank');
+               
+            });
+
+
+        } // end of iiunitMap
+    </script>
+
+    <div class="row mt-5">
+        <div class="col-12" id="maptosite">
+        </div>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqibMN4oy4SVfbTXDrUmF7Tt8vBz_R-0k&callback=initMap&v=weekly" async></script>
+    </div>
+
+    <div class="row mt-5">
+        {% if videos %} {% for video in videos %}
+        <div class="col-md-4">
+            <div class="card" style="background-color: #0f0f0f;">
+                {% video video.sitevideo_url 'tiny' %}
+            </div>
+        </div>{% endfor %} {% endif %}
+    </div>
+</div>
+
+
+{% endblock content %}

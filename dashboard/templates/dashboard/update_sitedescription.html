@@ -1,0 +1,76 @@
+{% extends 'dashboard/base.html' %} {% block content %} {% load embed_video_tags %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h4>Update Site</h4>
+        </div>
+        
+            
+       
+    </div>
+    <div class="row mt-2">
+        <div class="col-12">
+            <form action="">
+                <p style="margin-bottom: 10px;">
+                    Country
+                </p>
+                <select name="country" onchange="filterbystate_id(this.value)" class="form-select back">
+                    <option>.......</option>
+                    {% for country in country_count %}
+                    <option value={{country.id}}>{{country.country_name}}</option>
+                    {% endfor %}
+                </select>
+            </form>
+            <br>
+            <form action="" method="post">
+                {% csrf_token %}{{form.media}} {{form.as_p}}
+                <input type="submit" value="Update Site Description" class="button">
+                <a href="{% url 'info_sitedescription' %}" class="button">Back</a>
+            </form>
+
+        </div>
+    </div>
+    <hr>
+    <div class="row mt-2">
+        <h4>Update Site Images</h4>
+        {% if info_sitedescription_image %} {% for image in info_sitedescription_image %}
+        <div class="col-md-3 mt-md-2">
+            <div class="card">
+                <img src="{{image.siteimage_url.url}}" class="card-img-top" alt="" width="250px" height="150px">
+                <div class="card-body">
+                  <h5 class="card-title">{{image.siteimage_name}}</h5>
+                  <a href="{% url 'update_siteimage' image.id %}"class="button">Edit</a>
+                  <input type="button" value="Delete" data-sid={{image.id}} class="button" id="btn_delete_siteimage">
+                </div>
+              </div>
+        </div>
+        {% endfor %} {% endif %}
+    </div>
+    <div class="row mt-2">
+        <h4>Update Site Videos</h4>
+        {% if info_sitedescription_video %} {% for video in info_sitedescription_video %}
+        <div class="col-md-4 mt-md-2 ms-md-2">
+            <div class="card">
+                {% video video.sitevideo_url 'tiny' %}
+                <div class="card-body">
+                  <h5 class="card-title">{{video.sitevideo_name}}</h5>
+                  <a href="{% url 'update_sitevideo' video.id %}" class="button">Edit</a>
+                 <input type="button" value="Delete" data-sid={{video.id}} class="button" id="btn_delete_sitevideo">
+                </div>
+              </div>
+        </div>
+        {% endfor %} {% endif %}
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    
+ 
+    {%include 'dashboard/site_resource_ajax.html'%}
+    {% include "dashboard/bycountrywise.html"%}
+</div>
+{% endblock content %}
